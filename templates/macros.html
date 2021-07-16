@@ -1,0 +1,43 @@
+{% macro hyperkaehler(X) %}
+<div data-type="{{ X.key }}">
+
+<h3 class="text-center">{{ X.name | safe }}</h3>
+
+<dl class="row basic">
+  <dt class="col-6 text-right">dimension</dt>
+  <dd class="col-6 text-left">{{ X.dimension }}</dd>
+
+  <dt class="col-6 text-right">number of moduli</dt>
+  <dd class="col-6 text-left">{{ X.betti[2] - 2 }}</dd>
+
+  <dt class="col-6 text-right"><a href="/fujiki">Fujiki constant</a></dt>
+  <dd class="col-6 text-left">{{ X.fujiki }}</dd>
+
+  <dt class="col-6 text-right">Beauville&ndash;Bogomolov form</dt>
+  <dd class="col-6 text-left">${{ X.bb }}$</dd>
+</dl>
+
+{{ betti(X) }}
+{{ hodge(X) }}
+
+</div>
+{% endmacro %}
+
+{% macro betti(X) %}
+  \begin{array}{rc}
+    {% for i in range(2*X.dimension + 1) %}
+      \mathrm{b}_{ {{ i }} }=&{{ X.betti[i] }} \\
+    {% endfor %}
+  \end{array}
+{% endmacro %}
+
+{% macro hodge(X) %}
+<div class="diamond">
+  {% for i in range(2*X.dimension + 1) %}
+    {% for j in range(i + 1) if j <= X.dimension and i - j <= X.dimension %}
+      <span>{{ X.hodge[j][i - j] }}</span>
+      {% if loop.last %}<br style="clear: both">{% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+{% endmacro %}

@@ -1,0 +1,85 @@
+{% extends "page.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}Overview{% endblock %}
+
+{% block content %}
+
+<p>Varieties with trivial canonical bundle are particularly interesting objects. The Beauville&ndash;Bogomolov decomposition theorem tells us that, after a finite étale cover, such a variety is isomorphic to the product of
+<ul>
+  <li>abelian varieties
+  <li>strict Calabi&ndash;Yau varieties
+  <li>irreducible holomorphic symplectic, or hyperkähler varieties
+</ul>
+<p>The classification for the first class is trivial, whilst there are <em>many</em> constructions for the second class, already in dimension 3.
+<p>The classification of the third class is the most intriguing: hyperkähler varieties have lots of amazing properties, but there are very few examples. We collect (some) information about the known families.
+
+<ul class="nav nav-tabs" id="table" role="tablist">
+  <li class="nav-item" role="presentation"><a class="nav-link active" id="K3-tab" data-toggle="tab" href="#K3" role="tab" aria-controls="K3" aria-selected="true">K3</a></li>
+  <li class="nav-item" role="presentation"><a class="nav-link" id="K3-n-tab" data-toggle="tab" href="#K3-n" role="tab" aria-controls="K3-n" aria-selected="false">K3<sup>[<em>n</em>]</a></li>
+  <li class="nav-item" role="presentation"><a class="nav-link" id="Kum-n-tab" data-toggle="tab" href="#Kum-n" role="tab" aria-controls="Kum-n" aria-selected="false">Kum<sup><em>n</em></sup></a></li>
+  <li class="nav-item" role="presentation"><a class="nav-link" id="OG6-tab" data-toggle="tab" href="#OG6" role="tab" aria-controls="OG6" aria-selected="false">OG<sub>6</sub></a></li>
+  <li class="nav-item" role="presentation"><a class="nav-link" id="OG10-tab" data-toggle="tab" href="#OG10" role="tab" aria-controls="OG10" aria-selected="false">OG<sub>10</sub></a></li>
+</ul>
+
+<div class="tab-content" id="table-content">
+  <div class="tab-pane fade show active" id="K3" role="tabpanel" aria-labelledby="K3-tab">
+    K3 surfaces: give a description
+
+    <hr>
+
+    {{ macros.hyperkaehler(hyperkaehlers["K3"]) }}
+  </div>
+
+  <div class="tab-pane fade" id="K3-n" role="tabpanel" aria-labelledby="K3-n-tab">
+    Hilbert schemes of points on K3 surfaces: give a description
+
+    <p><label for="K3-n-selector">value for <em>n</em> (2&ndash;10)</label>: <input type="number" id="K3-n-selector" name="K3-n-selector" min="2" max="10" value="2">
+
+    <hr>
+
+    {% for i in range(2, 6) %}
+      {{ macros.hyperkaehler(hyperkaehlers["K3-" + (i | string)]) }}
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="Kum-n" role="tabpanel" aria-labelledby="Kumn-tab">
+    generalised Kummer varieties: give a description
+
+    <hr>
+
+    {% for i in range(2, 6) %}
+      {{ macros.hyperkaehler(hyperkaehlers["Kum-" + (i | string)]) }}
+    {% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="OG6" role="tabpanel" aria-labelledby="OG6-tab">
+    O'Grady 6: give a description
+
+    <hr>
+
+    {{ macros.hyperkaehler(hyperkaehlers["OG6"]) }}
+  </div>
+
+  <div class="tab-pane fade" id="OG10" role="tabpanel" aria-labelledby="OG10-tab">
+    O'Grady 10: give a description
+
+    <hr>
+
+    {{ macros.hyperkaehler(hyperkaehlers["OG10"]) }}
+  </div>
+</div>
+
+<script type="text/javascript">
+$("div[data-type^=K3-]").hide();
+$("div[data-type^=K3-2]").show();
+
+$("input#K3-n-selector").change(function() {
+  $("div[data-type^=K3-]").hide();
+  $("div[data-type^=K3-" + $(this).val() + "]").show();
+  console.log();
+});
+</script>
+
+
+{% endblock %}
