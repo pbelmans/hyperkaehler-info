@@ -29,7 +29,6 @@ class Hyperkaehler:
         self.chern = dict()
         if "chern" in data:
             for number in data["chern"]:
-                print(number)
                 number = list(map(int, number.split(" ")))
 
                 value = number[-1]
