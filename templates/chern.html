@@ -1,0 +1,47 @@
+{% extends "page.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}Chern numbers{% endblock %}
+
+{% block content %}
+
+<p>Here comes some explanation, together with an overview table, so the following (with a better layout)
+
+<p>
+  <label for="K3-n-selector">dimension <em>d</em> (2&ndash;20)</label>:
+  <input type="number" id="dimension-selector" name="dimension-selector" min="2" max="20" value="6" step="2">
+
+{% for n in range(2, 21, 2) %}
+<table class="table table-hover" data-dimension="{{ n }}" style="width: auto !important">
+    <thead>
+      <tr>
+        <th>monomial</th>
+        {% for X in hyperkaehlers.values() if X.dimension == n %}<th>{{ X.shorthand | safe }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% set varieties = hyperkaehlers.values() | selectattr("dimension", "eq", n) | list %}
+      {% set monomials = varieties[0].chern | dictsort(false, 'value') | reverse | list %}
+      {% for (monomial, _) in monomials %}
+        <tr>
+          <th>{{ macros.chern_monomial(monomial) }}</th>
+          {% for X in varieties %}
+            <td>{{ X.chern[monomial] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endfor %}
+
+<script type="text/javascript">
+$("table[data-dimension]").hide();
+$("table[data-dimension=6]").show();
+
+$("input#dimension-selector").change(function() {
+  $("table[data-dimension]").hide();
+  $("table[data-dimension=" + $(this).val() + "]").show();
+});
+</script>
+
+{% endblock %}

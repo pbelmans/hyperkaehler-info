@@ -2,38 +2,40 @@
 Thorsten's suggestions
 ----------------------
 
-* Riemann--Roch polynomial
+[ ] Riemann--Roch polynomial
 
-* Hodge numbers
+[x] Hodge numbers
 
-* highest order of (anti-)symplectic automorphism (which is of finite order)
+[ ] highest order of (anti-)symplectic automorphism (which is of finite order)
 
-* which polarization type their Lagrangian fibrations have
+[ ] which polarization type their Lagrangian fibrations have
 
-* isometry type of the Beauville--Bogomolov--Fujiki form
+[ ] isometry type of the Beauville--Bogomolov--Fujiki form
 
-* integral of square root of Todd class
+[ ] integral of square root of Todd class
 
-* monodromy group
+[ ] monodromy group
 
-* derived monodromy group
+[ ] derived monodromy group
 
-* Larsen--Lunts--Verbitsky decomposition of cohomology
+[ ] Larsen--Lunts--Verbitsky decomposition of cohomology
 
-* whether certain conjectures are known:
-  - SYZ
-  - BV
-  - base of Lagrangian fibrations base is P^n
-  - integral Hodge conjecture
+[ ] whether certain conjectures are known:
+  [ ] SYZ
+  [ ] BV
+  [ ] base of Lagrangian fibrations base is P^n
+  [ ] integral Hodge conjecture
 
-* largest-dimensional known families (e.g. whether we know locally complete algebraic families in this deformation type or not)
+[ ] largest-dimensional known families (e.g. whether we know locally complete algebraic families in this deformation type or not)
 
 My suggestions
 --------------
 
-* Chern numbers
+[x] Chern numbers
 
-* Fujiki constant
+[x] Fujiki constant
+
+[ ] stable Betti numbers? some Heisenberg stuff?
 
 
 To be done

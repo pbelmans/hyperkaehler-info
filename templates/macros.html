@@ -17,19 +17,25 @@
   <dd class="col-6 text-left">${{ X.bb }}$</dd>
 </dl>
 
-{{ betti(X) }}
+<div class="row">
+  <div class="col-6 text-center">{{ chern(X) }}</div>
+  <div class="col-6 text-center">{{ betti(X) }}</div>
+</div>
 {{ hodge(X) }}
 
 </div>
 {% endmacro %}
 
+
 {% macro betti(X) %}
-  \begin{array}{rc}
-    {% for i in range(2*X.dimension + 1) %}
-      \mathrm{b}_{ {{ i }} }=&{{ X.betti[i] }} \\
-    {% endfor %}
-  \end{array}
+<h5><a href="/betti">Betti numbers</a></h5>
+\begin{array}{rc}
+  {% for i in range(2*X.dimension + 1) %}
+    \mathrm{b}_{ {{ i }} }=&{{ X.betti[i] }} \\
+  {% endfor %}
+\end{array}
 {% endmacro %}
+
 
 {% macro hodge(X) %}
 <div class="diamond">
@@ -40,4 +46,31 @@
     {% endfor %}
   {% endfor %}
 </div>
+{% endmacro %}
+
+
+{% macro chern_monomial(monomial) %}
+${% for (d, e) in monomial %}\mathrm{c}_{ {{ d }} }^{ {% if e != 1 %}{{ e }}{% endif %} }{% endfor %}$
+{% endmacro %}
+
+
+{% macro chern(X) %}
+<h5><a href="/chern">Chern numbers</a></h5>
+<table class="table table-hover" style="width: auto !important; margin: 0 auto;">
+  <thead>
+    <tr>
+      <th>monomial</th>
+      <th>value</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for monomial, value in X.chern | dictsort(false, 'value') | reverse %}
+    <tr>
+      <td class="text-right">{{ chern_monomial(monomial) }}</td>
+      <td>{{ value }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endmacro %}
