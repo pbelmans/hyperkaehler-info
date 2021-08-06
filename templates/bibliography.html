@@ -1,0 +1,28 @@
+{#
+I tried using namespaces to keep track of which items are being cited on a page,
+but it seems that a global namespace _persists_ through different requests.
+So one would be perpetually adding more and more keys being cited.
+
+Maybe there is a workaround, but for now I'll just explicitly cite the keys,
+which does cause some redundancies in the way you write a page...
+#}
+
+{% macro cite(keys, optional=False) %}
+{% if keys is string %}{% set keys = [keys] %}{% endif %}
+[
+{%- if optional -%}{{ optional }}, {% endif %}
+{% for key in keys %}<a href="#{{ key }}">{{ key }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+]
+{% endmacro %}
+
+
+{% macro references(keys) %}
+<hr>
+<h5>References</h5>
+<dl class="bibliography">
+{% for key in keys %}
+  <dt id="{{ key }}">{{ key }}
+  <dd class="ml-4">{{ bibliography[key] | safe }}
+{% endfor %}
+</dl>
+{% endmacro %}

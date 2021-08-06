@@ -6,6 +6,7 @@ import os
 import re
 import yaml
 import math
+import pybtex.database, pybtex.richtext
 
 app = Flask(__name__)
 
@@ -85,7 +86,7 @@ class Hyperkaehler:
         # HTML name
         if key == "K3":        self.name = "K3 surface"
         elif key[:3] == "K3-": self.name = "K3<sup>[{}]</sup>-type".format(n)
-        elif key[:3] == "Kum": self.name = "Kum<sup>[{}]</sup>-type".format(n)
+        elif key[:3] == "Kum": self.name = "Kum<sup>{}</sup>-type".format(n)
         elif key == "OG6":     self.name = "O'Grady's 6-dimensional sporadic type" # TODO suboptimal naming
         elif key == "OG10":    self.name = "O'Grady's 10-dimensional sporadic type"
 
@@ -107,27 +108,86 @@ with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), "data.yml"),
       hyperkaehlers[key] = Hyperkaehler(key, data[key])
 
 
+bibliography = dict()
+
+def extract_field(entry, field):
+    return pybtex.richtext.Text.from_latex(entry.fields[field]).render_as("html")
+
+with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), "bibliography.bib"), "r", encoding="utf8") as f:
+    data = pybtex.database.parse_string(f.read(), "bibtex")
+    for key in data.entries:
+        entry = data.entries[key]
+
+        author = " and ".join([person.__str__() for (field, value) in entry.persons.items() for person in value])
+        author = pybtex.richtext.Text.from_latex(author).render_as("html")
+
+        # this will fail, let's just improve whenever needed...
+        title = extract_field(entry, "title")
+
+        if entry.type == "article":
+            journal = extract_field(entry, "journal")
+            volume = extract_field(entry, "volume")
+            year = extract_field(entry, "year")
+            pages = extract_field(entry, "pages")
+
+            bibliography[key] = "{}. \"{}.\" In: <i>{}</i> {} ({}), pp. {}".format(author, title, journal, volume, year, pages)
+
+        if entry.type == "book":
+            year = extract_field(entry, "year")
+            series = extract_field(entry, "series")
+            volume = extract_field(entry, "volume")
+            pages = extract_field(entry, "pages")
+
+            bibliography[key] = "{}. \"{}.\" {}, {}".format(author, title, series, volume)
+
+        if entry.type == "phdthesis":
+            year = extract_field(entry, "year")
+            school = extract_field(entry, "school")
+
+            bibliography[key] = "{}. \"{}.\" PhD thesis, {} ({})".format(author, title, school, year)
+
+
+        if entry.type == "online":
+            bibliography[key] = "{}. \"{}\"".format(author, title)
+
+
+        # if doi is present append this information
+        if "doi" in entry.fields:
+            doi = extract_field(entry, "doi")
+            bibliography[key] = "{}. doi:<a href=\"https://doi.org/{}\">{}</a>".format(bibliography[key], doi, doi)
+
+        # if eprint is present append this information
+        if "eprint" in entry.fields:
+            eprint = extract_field(entry, "eprint")
+            bibliography[key] = "{}. arXiv:<a href=\"https://arxiv.org/abs/{}\">{}</a>".format(bibliography[key], eprint, eprint)
+
+
+# make these globally accessible
+app.jinja_env.globals["bibliography"] = bibliography
+app.jinja_env.globals["hyperkaehlers"] = hyperkaehlers
+
+
 @app.route("/")
-def index(): return render_template("index.html", hyperkaehlers=hyperkaehlers)
+def index(): return render_template("index.html")
 
 @app.route("/about")
 def about(): return render_template("about.html")
 
 # specialised pages
 @app.route("/beauville-bogomolov")
-def beauville_bogomolov(): return render_template("beauville-bogomolov.html", hyperkaehlers=hyperkaehlers)
+def beauville_bogomolov(): return render_template("beauville-bogomolov.html")
 
 @app.route("/betti")
-def betti(): return render_template("betti.html", hyperkaehlers=hyperkaehlers)
+def betti(): return render_template("betti.html")
 
 @app.route("/chern")
-def chern(): return render_template("chern.html", hyperkaehlers=hyperkaehlers)
+def chern(): return render_template("chern.html")
 
 @app.route("/euler")
-def euler(): return render_template("euler.html", hyperkaehlers=hyperkaehlers)
+def euler(): return render_template("euler.html")
 
 @app.route("/fujiki")
 def fujiki(): return render_template("fujiki.html")
 
 @app.route("/hodge")
-def hodge(): return render_template("hodge.html", hyperkaehlers=hyperkaehlers)
+def hodge(): return render_template("hodge.html")
