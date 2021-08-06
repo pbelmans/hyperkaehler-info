@@ -1,0 +1,35 @@
+{% extends "page.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}Euler characteristic{% endblock %}
+
+{% block content %}
+
+<h3>Euler characteristic</h3>
+<p>The <em>Euler characteristic</em> is the alternating sum of the <a href="/betti">Betti numbers</a> of a manifold.
+<p>It is also the top <a href="/chern">Chern number</a>, so for a $2n$-dimensional hyperkähler manifold $X$ we are interested in $\int\mathrm{c}_{2n}(X)$.
+<p>For the two infinite families we obtain an important sequence of numbers, as detailed below.
+
+<dl>
+  <dt>K3<sup>[n]</sup>-type</dt>
+  <dd class="ml-4">1, 24, 324, 3200, 25650, 176256, 1073720, 5930496, 30178575, 143184000, 639249300, ...
+  <dd class="ml-4">coefficients of the expansion of $1/\eta(q)^{24}$
+  <dd class="ml-4">see also <a href="https://oeis.org/A006922">OEIS:A006922</a>
+
+  <dt>Kum<sup>[n]</sup>-type</dt>
+  <dd class="ml-4">1, 24, 108, 448, 750, 2592, 2744, 7680, 9477, 18000, 15972, ...
+  <dd class="ml-4">coefficients of the expansion of $\frac{1}{6912}(6\mathrm{E}_2^2\mathrm{E}_4 - 8\mathrm{E}_2\mathrm{E}_6 + 3\mathrm{E}_4^2 - \mathrm{E}_2^4)$, where $\mathrm{E}_2,\mathrm{E}_4,\mathrm{E}_6$ are the Eisenstein series of weights 2, 4, and 6
+  <dd class="ml-4">see also <a href="https://oeis.org/A282211">OEIS:A282211</a>
+</dl>
+
+<p>The two sporadic cases have the following Euler characteristic:
+
+<dl>
+  <dt>OG<sub>6</sub></dt>
+  <dd class="ml-4">1920
+
+  <dt>OG<sub>10</sub></dt>
+  <dd class="ml-4">176904
+</dl>
+
+{% endblock %}

@@ -5,6 +5,7 @@ import glob
 import os
 import re
 import yaml
+import math
 
 app = Flask(__name__)
 
@@ -16,6 +17,7 @@ class Hyperkaehler:
         self.key = key
 
         self.dimension = data["dimension"]
+        n = self.dimension // 2 # this is a useful variable
 
         # Hodge numbers
         self.hodge = list(map(int, data["hodge"].split(" ")))
@@ -27,6 +29,7 @@ class Hyperkaehler:
 
         # Chern numbers
         self.chern = dict()
+        self.euler = 0
         if "chern" in data:
             for number in data["chern"]:
                 number = list(map(int, number.split(" ")))
@@ -37,28 +40,59 @@ class Hyperkaehler:
                         "{} is not a valid Chern monomial of degree {}".format(monomials, self.dimension)
 
                 self.chern[monomials] = int(value)
+            self.euler = self.chern[((2*n, 1),)]
 
+        # integral of square root of the Todd clas
+        if key == "K3":        self.square_root_todd = 1
+        elif key[:3] == "K3-": self.square_root_todd = str((n + 3)**n) + "/" + str(4**n * math.factorial(n))
+        elif key[:3] == "Kum": self.square_root_todd = str((n + 1)**n) + "/" + str(4**n * math.factorial(n))
+        elif key == "OG6":     self.square_root_todd = "2/3"
+        elif key == "OG10":    self.square_root_todd = "4/15"
+        # turn it into a tuple with the reduced fraction
+        if key == "K3": self.square_root_todd = (1, 1)
+        else:
+            integral = tuple(map(int, self.square_root_todd.split("/")))
+            gcd = math.gcd(integral[0], integral[1])
+            self.square_root_todd = (self.square_root_todd, str(integral[0] // gcd) + "/" + str(integral[1] // gcd))
+
+        # Fujiki constant
         if key == "K3":        self.fujiki = 1
         elif key[:3] == "K3-": self.fujiki = 1
-        elif key[:3] == "Kum": self.fujiki = 1 + self.dimension // 2
+        elif key[:3] == "Kum": self.fujiki = 1 + n
         elif key == "OG6":     self.fujiki = 4
         elif key == "OG10":    self.fujiki = 1
 
+        # Beauville-Bogomolov form
         if key == "K3":        self.bb = r"\mathrm{E}_8(-1)^{\oplus2}\oplus\mathrm{U}^{\oplus3}"
         elif key[:3] == "K3-": self.bb = r"\mathrm{E}_8(-1)^{\oplus2}\oplus\mathrm{U}^{\oplus3}\oplus(" + str(-self.dimension + 2) + ")"
         elif key[:3] == "Kum": self.bb = r"\mathrm{U}^3\oplus(" + str(-self.dimension - 2) + ")"
         elif key == "OG6":     self.bb = r"\mathrm{U}^3\oplus(-2)^{\oplus2}"
         elif key == "OG10":    self.bb = r"\mathrm{E}_8(-1)^{\oplus2}\oplus\mathrm{U}^3\oplus\mathrm{A}_2(-1)"
 
+        # polarisation type of Lagrangian fibration
+        self.polarisations = []
+        if key == "K3":        self.polarisations.append("(1)")
+        elif key[:3] == "K3-": self.polarisations.append("(" + ",".join("1") + ")")
+        elif key[:3] == "Kum":
+            # Theorem 1.1 of MR3848435
+            ds = [d for d in range(1, n+2) if (n+1) % (d*d) == 0]
+            for d in ds:
+                polarisation = ",".join(["(" + ",".join(["1"]*(n-2)) + ("," if n > 2 else "") + str(d) + "," + str((n+1) // d) + ")"])
+                self.polarisations.append(polarisation)
+        elif key == "OG6":     self.polarisations.append("(1,2,2)")
+        elif key == "OG10":    self.polarisations.append("(1,1,1,1,1)")
+
+        # HTML name
         if key == "K3":        self.name = "K3 surface"
-        elif key[:3] == "K3-": self.name = "K3<sup>[{}]</sup>-type".format(self.dimension // 2)
-        elif key[:3] == "Kum": self.name = "Kum<sup>[{}]</sup>-type".format(self.dimension // 2)
+        elif key[:3] == "K3-": self.name = "K3<sup>[{}]</sup>-type".format(n)
+        elif key[:3] == "Kum": self.name = "Kum<sup>[{}]</sup>-type".format(n)
         elif key == "OG6":     self.name = "O'Grady's 6-dimensional sporadic type" # TODO suboptimal naming
         elif key == "OG10":    self.name = "O'Grady's 10-dimensional sporadic type"
 
+        # shorthand name
         if key == "K3":        self.shorthand = "K3"
-        elif key[:3] == "K3-": self.shorthand = "K3<sup>[{}]</sup>-type".format(self.dimension // 2)
-        elif key[:3] == "Kum": self.shorthand = "Kum<sup>[{}]</sup>-type".format(self.dimension // 2)
+        elif key[:3] == "K3-": self.shorthand = "K3<sup>[{}]</sup>-type".format(n)
+        elif key[:3] == "Kum": self.shorthand = "Kum<sup>[{}]</sup>-type".format(n)
         elif key == "OG6":     self.shorthand = "OG<sub>6</sub>"
         elif key == "OG10":    self.shorthand = "OG<sub>10</sub>"
 
@@ -80,11 +114,20 @@ def index(): return render_template("index.html", hyperkaehlers=hyperkaehlers)
 def about(): return render_template("about.html")
 
 # specialised pages
+@app.route("/beauville-bogomolov")
+def beauville_bogomolov(): return render_template("beauville-bogomolov.html", hyperkaehlers=hyperkaehlers)
+
 @app.route("/betti")
 def betti(): return render_template("betti.html", hyperkaehlers=hyperkaehlers)
 
 @app.route("/chern")
 def chern(): return render_template("chern.html", hyperkaehlers=hyperkaehlers)
 
+@app.route("/euler")
+def euler(): return render_template("euler.html", hyperkaehlers=hyperkaehlers)
+
 @app.route("/fujiki")
 def fujiki(): return render_template("fujiki.html")
+
+@app.route("/hodge")
+def hodge(): return render_template("hodge.html", hyperkaehlers=hyperkaehlers)

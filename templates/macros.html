@@ -3,24 +3,42 @@
 
 <h3 class="text-center">{{ X.name | safe }}</h3>
 
-<dl class="row basic">
-  <dt class="col-6 text-right">dimension</dt>
-  <dd class="col-6 text-left">{{ X.dimension }}</dd>
+<div class="row">
+  <div class="col-md-6">
+    <dl class="row basic">
+      <dt class="col-7 text-right">dimension</dt>
+      <dd class="col-5 text-left">{{ X.dimension }}</dd>
 
-  <dt class="col-6 text-right">number of moduli</dt>
-  <dd class="col-6 text-left">{{ X.betti[2] - 2 }}</dd>
+      <dt class="col-7 text-right">number of moduli</dt>
+      <dd class="col-5 text-left">{{ X.betti[2] - 2 }}</dd>
 
-  <dt class="col-6 text-right"><a href="/fujiki">Fujiki constant</a></dt>
-  <dd class="col-6 text-left">{{ X.fujiki }}</dd>
+      <dt class="col-7 text-right">Beauville&ndash;Bogomolov form</dt>
+      <dd class="col-5 text-left">${{ X.bb }}$</dd>
 
-  <dt class="col-6 text-right">Beauville&ndash;Bogomolov form</dt>
-  <dd class="col-6 text-left">${{ X.bb }}$</dd>
-</dl>
+      <dt class="col-7 text-right"><a href="/euler">Euler characteristic</a></dt>
+      <dd class="col-5 text-left">${{ X.euler }}$</dd>
+    </dl>
+  </div>
+
+  <div class="col-md-6">
+    <dl class="row basic">
+      <dt class="col-7 text-right"><a href="/fujiki">Fujiki constant</a></dt>
+      <dd class="col-5 text-left">{{ X.fujiki }}</dd>
+
+      <dt class="col-7 text-right">$\int\mathrm{td}_X^{1/2}$
+      <dd class="col-5 text-left">${{ X.square_root_todd[1] }}$
+
+      <dt class="col-7 text-right">polarisation type of general fiber
+      <dd class="col-5 text-left">${% for polarisation in X.polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
+    </dl>
+  </div>
+</div>
 
 <div class="row">
-  <div class="col-6 text-center">{{ chern(X) }}</div>
-  <div class="col-6 text-center">{{ betti(X) }}</div>
+  <div class="col-md-6 text-center">{{ chern(X) }}</div>
+  <div class="col-md-6 text-center">{{ betti(X) }}</div>
 </div>
+
 {{ hodge(X) }}
 
 </div>
@@ -28,21 +46,42 @@
 
 
 {% macro betti(X) %}
-<h5><a href="/betti">Betti numbers</a></h5>
-\begin{array}{rc}
-  {% for i in range(2*X.dimension + 1) %}
-    \mathrm{b}_{ {{ i }} }=&{{ X.betti[i] }} \\
-  {% endfor %}
-\end{array}
+<h5 class="mt-3"><a href="/betti">Betti numbers</a></h5>
+<table class="table table-sm table-hover" style="width: auto !important; margin: 0 auto;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>value</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for i in range(2*X.dimension + 1) %}
+    <tr>
+      <td class="text-right">
+        {% if i == 2 %}<a style="display: block" href="/beauville-bogomolov">{% endif %}
+        $\mathrm{b}_{ {{ i }} }$
+        {% if i == 2 %}</a>{% endif %}
+      </td>
+      <td>
+        {% if i == 2 %}<a style="display: block" href="/beauville-bogomolov">{% endif %}
+        {{ X.betti[i] }}</td>
+        {% if i == 2 %}</a>{% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endmacro %}
 
 
 {% macro hodge(X) %}
-<div class="diamond">
+<h5 class="mt-3 text-center"><a href="/hodge">Hodge diamond</a></h5>
+<div class="diamond" style="position: relative; overflow: hidden; width: 100%; margin: 0 auto; text-align: center; word-wrap: none">
   {% for i in range(2*X.dimension + 1) %}
+    <div style="overflow: hidden; position: absolute; left: -50%; right: -50%">
     {% for j in range(i + 1) if j <= X.dimension and i - j <= X.dimension %}
-      <span>{{ X.hodge[j][i - j] }}</span>
-      {% if loop.last %}<br style="clear: both">{% endif %}
+      <span style="display: inline-block; width: 5.5rem">{{ X.hodge[j][i - j] }}</span>
+      {% if loop.last %}</div><br style="clear: both">{% endif %}
     {% endfor %}
   {% endfor %}
 </div>
@@ -55,8 +94,8 @@ ${% for (d, e) in monomial %}\mathrm{c}_{ {{ d }} }^{ {% if e != 1 %}{{ e }}{% e
 
 
 {% macro chern(X) %}
-<h5><a href="/chern">Chern numbers</a></h5>
-<table class="table table-hover" style="width: auto !important; margin: 0 auto;">
+<h5 class="mt-3"><a href="/chern">Chern numbers</a></h5>
+<table class="table table-sm table-hover" style="width: auto !important; margin: 0 auto;">
   <thead>
     <tr>
       <th>monomial</th>
@@ -67,8 +106,15 @@ ${% for (d, e) in monomial %}\mathrm{c}_{ {{ d }} }^{ {% if e != 1 %}{{ e }}{% e
   <tbody>
     {% for monomial, value in X.chern | dictsort(false, 'value') | reverse %}
     <tr>
-      <td class="text-right">{{ chern_monomial(monomial) }}</td>
-      <td>{{ value }}</td>
+      <td class="text-right">
+        {% if loop.last %}<a style="display: block"  href="/euler">{% endif %}
+        {{ chern_monomial(monomial) }}
+        {% if loop.last %}</a>{% endif %}
+      </td>
+      <td>
+        {% if loop.last %}<a style="display: block" href="/euler">{% endif %}
+        {{ value }}</td>
+        {% if loop.last %}</a>{% endif %}
     </tr>
     {% endfor %}
   </tbody>
