@@ -1,11 +1,60 @@
 {% extends "page.html" %}
 {% import "macros.html" as macros %}
+{% import "bibliography.html" as bibliography %}
 
 {% block title %}Hodge diamond{% endblock %}
 
 {% block content %}
 
 <p>Here comes some explanation, with an explanation of the symmetries in the Hodge diamond of a hyperkähler variety
+
+<dl>
+  <dt>{{ macros.K3n() }}-type</dt>
+  <dd class="ml-4">
+  The generating function can be found in {{ bibliography.cite("MR1312161", "Theorem 2.3.14") }}.
+  <!--For an arbitrary surface $S$ it reads
+  \[
+    \sum_{n=1}^{+\infty}\mathrm{h}(S^{[n]},x,y)t^n
+    =
+    \prod_{k=1}^{+\infty}\prod_{p,q=0}^2\left( 1 + (-1)^{p+q+1}x^{p+k-1}y^{q+k-1}t^k \right)^{(-1)^{p+q+1}\mathrm{h}^{p,q}(S)}
+  \]
+  -->
+
+  <dt>{{ macros.Kumn() }}-type</dt>
+  <dd class="ml-4">
+  A closed expression can be found in {{ bibliography.cite("MR1219901", "Corollary 1") }}.
+  <!--, by cancelling the Hodge polynomial of the abelian surface in
+  \[
+    \mathrm{h}(A\times\mathrm{K}^n(A),-x,-y)
+    =
+    \sum_{\alpha\in\mathrm{P}(n)}
+    \left(
+      g(\alpha)^4
+      (xy)^{n-|\alpha|}
+      \prod_{i,\alpha_i\neq 0}
+      \left(
+        \sum_{\beta\in\mathrm{P}(\alpha_i)}
+        \prod_{j}
+          \frac{1}{j^{\beta_j}\beta_j!}
+          \left(
+            (1-x^j)(1-y^j)
+          \right)^{2\beta_j}
+      \right)
+    \right)
+  \]
+  -->
+
+  <dt>OG<sub>6</sub></dt>
+  <dd class="ml-4">
+  The Hodge numbers are computed in {{ bibliography.cite("MR3798592", "Theorem 1.1") }}.
+
+  <dt>OG<sub>10</sub></dt>
+  <dd class="ml-4">
+  The Hodge numbers are computed in {{ bibliography.cite("1905.03217", "Theorem A") }}.
+</dl>
+
+
+{{ bibliography.references(["MR1312161", "MR1219901", "MR3798592", "1905.03217"]) }}
 
 {% endblock %}
 

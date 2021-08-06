@@ -11,7 +11,7 @@ Thorsten's suggestions
   anti-symplectic: upper bound on the order is b_2, ...?
   symplectic: ?, for K3 surfaces the upper bound is 8
 
-[ ] which polarization type their Lagrangian fibrations have
+[x] which polarization type their Lagrangian fibrations have
   K3^[n]: they are always PPAV
   in general: a bunch of integers dividing each other
   https://arxiv.org/pdf/1606.09010.pdf: Kum^n type

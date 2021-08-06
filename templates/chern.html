@@ -1,5 +1,6 @@
 {% extends "page.html" %}
 {% import "macros.html" as macros %}
+{% import "bibliography.html" as bibliography %}
 
 {% block title %}Chern numbers{% endblock %}
 
@@ -49,5 +50,23 @@ $("input#dimension-selector").change(function() {
   $("table[data-dimension=" + $(this).val() + "]").show();
 });
 </script>
+
+<dl>
+  <dt>{{ macros.K3n() }}-type</dt>
+  <dd class="ml-4">
+
+  <dt>{{ macros.Kumn() }}-type</dt>
+  <dd class="ml-4">
+
+  <dt>{{ macros.OGsix() }}</dt>
+  <dd class="ml-4">
+  The Chern are computed in {{ bibliography.cite("MR3798592", "Corollary 6.8") }}.
+
+  <dt>{{ macros.OGten() }}</dt>
+  <dd class="ml-4">
+  The Chern numbers are computed in {{ bibliography.cite("2006.09307", "Appendix A") }}.
+</dl>
+
+{{ bibliography.references(["MR3798592", "2006.09307"]) }}
 
 {% endblock %}
