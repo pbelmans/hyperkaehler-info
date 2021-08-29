@@ -10,7 +10,7 @@ which does cause some redundancies in the way you write a page...
 {% macro cite(keys, optional=False) %}
 {% if keys is string %}{% set keys = [keys] %}{% endif %}
 [
-{%- if optional -%}{{ optional }}, {% endif %}
+{%- if optional -%}{{ optional | safe }}, {% endif %}
 {% for key in keys %}<a href="#{{ key }}">{{ key }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
 ]
 {% endmacro %}

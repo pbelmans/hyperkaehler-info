@@ -173,6 +173,9 @@ def index(): return render_template("index.html")
 @app.route("/about")
 def about(): return render_template("about.html")
 
+@app.route("/explained")
+def explained(): return render_template("explained.html")
+
 # specialised pages
 @app.route("/beauville-bogomolov")
 def beauville_bogomolov(): return render_template("beauville-bogomolov.html")
