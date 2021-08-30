@@ -17,9 +17,6 @@
       <dt class="col-7 text-right">number of moduli</dt>
       <dd class="col-5 text-left">{{ X.betti[2] - 2 }}</dd>
 
-      <dt class="col-7 text-right">Beauville&ndash;Bogomolov form</dt>
-      <dd class="col-5 text-left">${{ X.bb }}$</dd>
-
       <dt class="col-7 text-right"><a href="/euler">Euler characteristic</a></dt>
       <dd class="col-5 text-left">${{ X.euler }}$</dd>
     </dl>
@@ -27,10 +24,15 @@
 
   <div class="col-md-6">
     <dl class="row basic">
+      <dt class="col-7 text-right"><a href="/beauville-fujiki">Beauville&ndash;Fujiki form</a></dt>
+      <dd class="col-5 text-left">${{ X.bb }}$</dd>
+
+      <!--
       <dt class="col-7 text-right"><a href="/fujiki">Fujiki constant</a></dt>
       <dd class="col-5 text-left">{{ X.fujiki }}</dd>
+      -->
 
-      <dt class="col-7 text-right">$\int\mathrm{td}_X^{1/2}$
+      <dt class="col-7 text-right"><a href="/hitchin-sawon">$\int\mathrm{td}_X^{1/2}$</a>
       <dd class="col-5 text-left">${{ X.square_root_todd[1] }}$
 
       <dt class="col-7 text-right">polarisation type of general fiber
@@ -64,12 +66,12 @@
     {% for i in range(2*X.dimension + 1) %}
     <tr>
       <td class="text-right">
-        {% if i == 2 %}<a style="display: block" href="/beauville-bogomolov">{% endif %}
+        {% if i == 2 %}<a style="display: block" href="/beauville-fujiki">{% endif %}
         $\mathrm{b}_{ {{ i }} }$
         {% if i == 2 %}</a>{% endif %}
       </td>
       <td>
-        {% if i == 2 %}<a style="display: block" href="/beauville-bogomolov">{% endif %}
+        {% if i == 2 %}<a style="display: block" href="/beauville-fujiki">{% endif %}
         {{ X.betti[i] }}</td>
         {% if i == 2 %}</a>{% endif %}
     </tr>

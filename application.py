@@ -46,15 +46,15 @@ class Hyperkaehler:
         # integral of square root of the Todd clas
         if key == "K3":        self.square_root_todd = 1
         elif key[:3] == "K3-": self.square_root_todd = str((n + 3)**n) + "/" + str(4**n * math.factorial(n))
-        elif key[:3] == "Kum": self.square_root_todd = str((n + 1)**n) + "/" + str(4**n * math.factorial(n))
+        elif key[:3] == "Kum": self.square_root_todd = str((n + 1)**(n + 1)) + "/" + str(4**n * math.factorial(n))
         elif key == "OG6":     self.square_root_todd = "2/3"
         elif key == "OG10":    self.square_root_todd = "4/15"
-        # turn it into a tuple with the reduced fraction
-        if key == "K3": self.square_root_todd = (1, 1)
+        # turn it into a tuple with the reduced fraction and numerical value
+        if key == "K3": self.square_root_todd = (1, 1, 1)
         else:
             integral = tuple(map(int, self.square_root_todd.split("/")))
             gcd = math.gcd(integral[0], integral[1])
-            self.square_root_todd = (self.square_root_todd, str(integral[0] // gcd) + "/" + str(integral[1] // gcd))
+            self.square_root_todd = (self.square_root_todd, str(integral[0] // gcd) + "/" + str(integral[1] // gcd), float(integral[0] / integral[1]))
 
         # Fujiki constant
         if key == "K3":        self.fujiki = 1
@@ -168,29 +168,42 @@ app.jinja_env.globals["hyperkaehlers"] = hyperkaehlers
 
 
 @app.route("/")
-def index(): return render_template("index.html")
+def index():
+    return render_template("index.html")
 
 @app.route("/about")
-def about(): return render_template("about.html")
+def about():
+    return render_template("about.html")
 
 @app.route("/explained")
-def explained(): return render_template("explained.html")
+def explained():
+    return render_template("explained.html")
 
 # specialised pages
-@app.route("/beauville-bogomolov")
-def beauville_bogomolov(): return render_template("beauville-bogomolov.html")
+@app.route("/beauville-fujiki")
+def beauville_fujiki():
+    return render_template("beauville-fujiki.html")
 
 @app.route("/betti")
-def betti(): return render_template("betti.html")
+def betti():
+    return render_template("betti.html")
 
 @app.route("/chern")
-def chern(): return render_template("chern.html")
+def chern():
+    return render_template("chern.html")
 
 @app.route("/euler")
-def euler(): return render_template("euler.html")
+def euler():
+    return render_template("euler.html")
 
 @app.route("/fujiki")
-def fujiki(): return render_template("fujiki.html")
+def fujiki():
+    return render_template("fujiki.html")
+
+@app.route("/hitchin-sawon")
+def hitchin_sawon():
+    return render_template("hitchin-sawon.html")
 
 @app.route("/hodge")
-def hodge(): return render_template("hodge.html")
+def hodge():
+    return render_template("hodge.html")

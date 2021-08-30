@@ -6,7 +6,8 @@
 
 {% block content %}
 
-<p>Here comes some explanation, together with an overview table, so the following (with a better layout)
+<h4>Chern numbers</h4>
+<p>Chern numbers are the integrals of monomials in the Chern classes of $X$ living in top degrees. These are integers that can be used to control various other numerical invariants of varieties.
 
 <h5>All Chern numbers</h5>
 <p>
@@ -17,8 +18,8 @@
 <table class="table table-hover" data-dimension="{{ n }}" style="width: auto !important">
     <thead>
       <tr>
-        <th>monomial</th>
-        {% for X in hyperkaehlers.values() if X.dimension == n %}<th>{{ X.shorthand | safe }}</th>{% endfor %}
+        <th class="text-right">monomial</th>
+        {% for X in hyperkaehlers.values() if X.dimension == n %}<th class="text-right">{{ X.shorthand | safe }}</th>{% endfor %}
       </tr>
     </thead>
     <tbody>
@@ -26,14 +27,14 @@
       {% set monomials = varieties[0].chern | dictsort(false, 'value') | reverse | list %}
       {% for (monomial, _) in monomials %}
         <tr>
-          <th>
+          <th class="text-right">
             {% if loop.last %}<a href="/euler">{% endif %}
             {{ macros.chern_monomial(monomial) }}
             {% if loop.last %}</a>{% endif %}
           </th>
 
           {% for X in varieties %}
-            <td>{{ X.chern[monomial] }}</td>
+            <td class="text-right">{{ X.chern[monomial] }}</td>
           {% endfor %}
         </tr>
       {% endfor %}
@@ -54,19 +55,23 @@ $("input#dimension-selector").change(function() {
 <dl>
   <dt>{{ macros.K3n() }}-type</dt>
   <dd class="ml-4">
+  The Chern numbers can be computed using the Bott residue formula, starting from {{ bibliography.cite("MR1795551", "Theorem 0.1") }}.
 
   <dt>{{ macros.Kumn() }}-type</dt>
   <dd class="ml-4">
+  The Chern numbers have been computed by Nieper&ndash;Wisskirchen in {{ bibliography.cite("MR1906063") }}.
 
   <dt>{{ macros.OGsix() }}</dt>
   <dd class="ml-4">
-  The Chern are computed in {{ bibliography.cite("MR3798592", "Corollary 6.8") }}.
+  The Chern numbers are computed in {{ bibliography.cite("MR3798592", "Corollary 6.8") }}.
 
   <dt>{{ macros.OGten() }}</dt>
   <dd class="ml-4">
   The Chern numbers are computed in {{ bibliography.cite("2006.09307", "Appendix A") }}.
 </dl>
 
-{{ bibliography.references(["MR3798592", "2006.09307"]) }}
+<p>Further computations of Chern numbers of {{ macros.K3n("n")}}- and {{ macros.Kumn("n") }}-type can be done using the <a href="https://github.com/8d1h/IntersectionTheory">IntersectionTheory</a> library written by Jieao Song in Julia.
+
+{{ bibliography.references(["MR1795551", "MR1906063", "MR3798592", "2006.09307"]) }}
 
 {% endblock %}

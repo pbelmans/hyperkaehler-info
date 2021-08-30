@@ -8,31 +8,85 @@
 
 <h3>Euler characteristic</h3>
 <p>The <em>topological Euler characteristic</em> is the alternating sum of the <a href="/betti">Betti numbers</a> of a manifold. It is also the top <a href="/chern">Chern number</a>, so for a $2n$-dimensional hyperkähler manifold $X$ we are interested in $\int\mathrm{c}_{2n}(X)$.
-<p>For the two infinite families we obtain an important sequence of numbers, as detailed below.
 
+<!--
+<p>For the two infinite families we obtain an important sequence of numbers, as detailed below.
+-->
 <dl>
   <dt>{{ macros.K3n() }}-type</dt>
-  <dd class="ml-4">1, 24, 324, 3200, 25650, 176256, 1073720, 5930496, 30178575, 143184000, 639249300, ...
-  <dd class="ml-4">These are the coefficients of the expansion of $1/\eta(q)^{24}$, see also <a href="https://oeis.org/A006922">OEIS:A006922</a>.
+  <!--<dd class="ml-4">1, 24, 324, 3200, 25650, 176256, 1073720, 5930496, 30178575, 143184000, 639249300, ...-->
+  <dd class="ml-4">These are the coefficients of the expansion of $1/\eta(q)^{24}$, see also <a href="https://oeis.org/A006922">OEIS:A006922</a>. This is proven in {{ bibliography.cite("MR1032930", "Corollary 2.10(b)") }}.
 
   <dt>{{ macros.Kumn() }}-type</dt>
-  <dd class="ml-4">1, 24, 108, 448, 750, 2592, 2744, 7680, 9477, 18000, 15972, ...
+  <!--<dd class="ml-4">1, 24, 108, 448, 750, 2592, 2744, 7680, 9477, 18000, 15972, ...-->
   <dd class="ml-4">These are the coefficients of the expansion of $\frac{1}{6912}(6\mathrm{E}_2^2\mathrm{E}_4 - 8\mathrm{E}_2\mathrm{E}_6 + 3\mathrm{E}_4^2 - \mathrm{E}_2^4)$, where $\mathrm{E}_2,\mathrm{E}_4,\mathrm{E}_6$ are the Eisenstein series of weights 2, 4, and 6, see also <a href="https://oeis.org/A282211">OEIS:A282211</a>.
+<!--
 </dl>
 
 <p>The two sporadic cases have the following Euler characteristic:
 
 <dl>
+-->
   <dt>{{ macros.OGsix() }}</dt>
-  <dd class="ml-4">1920
+  <!--<dd class="ml-4">1920-->
   <dd class="ml-4">This is proven in {{ bibliography.cite("MR2282256", "Theorem 2.2.3") }}.
 
   <dt>{{ macros.OGten() }}</dt>
-  <dd class="ml-4">176904
+  <!--<dd class="ml-4">176904-->
   <dd class="ml-4">This is proven in {{ bibliography.cite("mozgovoy-phd") }}.
 </dl>
 
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th>
+      <th class="text-right">K3</th>
+      <th class="text-right">{{ macros.K3n() }}-type</th>
+      <th class="text-right">{{ macros.Kumn() }}-type</th>
+      <th class="text-right">{{ macros.OGsix() }}</th>
+      <th class="text-right">{{ macros.OGten() }}</th>
+    </tr>
+    <tr>
+      <td class="text-right">general case
+      <td>
+      <td class="text-right"><a href="https://oeis.org/A006922">OEIS:A006922</a></td>
+      <td class="text-right"><a href="https://oeis.org/A282211">OEIS:A282211</a></td>
+      <td>
+      <td>
+    </tr>
+  </thead>
 
-{{ bibliography.references(["mozgovoy-phd", "MR2282256"]) }}
+  <tbody>
+    <tr>
+      <td class="text-right">$n=1$
+      <td class="text-right">24
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    {% for i in range(2, 11) %}
+    <tr>
+      <td class="text-right">$n={{ i }}$
+      <td>
+      <td class="text-right">{{ hyperkaehlers["K3-" + (i | string)].euler }}
+      <td class="text-right">{{ hyperkaehlers["Kum-" + (i | string)].euler }}
+      {% if i == 3 %}
+        <td class="text-right">{{ hyperkaehlers["OG6"].euler }}
+        <td>
+      {% elif i == 5 %}
+        <td>
+        <td class="text-right">{{ hyperkaehlers["OG10"].euler }}
+      {% else %}
+        <td>
+        <td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{{ bibliography.references(["MR1032930", "mozgovoy-phd", "MR2282256"]) }}
 
 {% endblock %}

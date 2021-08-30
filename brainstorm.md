@@ -21,16 +21,20 @@ Thorsten's suggestions
 
 [x] isometry type of the Beauville--Bogomolov--Fujiki form
 
+  [x] include signature
+  [x] discriminant group
+  [?] qbar
+
 [x] integral of square root of Todd class
 
-[ ] monodromy group
+[?] monodromy group
   large subgroup of O(H^2(X,Z)): always at least index 2
   if index is precisely 2 then birational Torelli holds
   K3: index 2
   K3^[n]: 2^{\rho(n)-1}
   appendix B of https://73df973a-474a-47c7-8990-13cfbbbe9b88.filesusr.com/ugd/ad33a9_bc50fb1efa284ea4a42b1a39d51380e1.pdf
 
-[ ] discriminant
+[x] discriminant
   appendix B of https://73df973a-474a-47c7-8990-13cfbbbe9b88.filesusr.com/ugd/ad33a9_bc50fb1efa284ea4a42b1a39d51380e1.pdf
   for even lattice we have discriminant group, and get a Q/2Z-valued form, this is q in Debarre's appendix
 
@@ -85,7 +89,7 @@ Thorsten's suggestions
     and a given polarization, so there's a square of the polarization
     Mongardi--Rapagnetta
 
-[ ] 
+[ ] Sawon's degree of the discriminant of a Lagrangian fibration
 
 My suggestions
 --------------
@@ -93,6 +97,8 @@ My suggestions
 [x] Chern numbers
 
 [x] Fujiki constant
+
+  [ ] check how the invariants in 3.2.1 and 3.2.2 of https://arxiv.org/pdf/1810.02087.pdf compare to what is currently written on the website
 
 [ ] stable Betti numbers? some Heisenberg stuff?
   section 5 and appendix of https://arxiv.org/pdf/math/0009109.pdf
@@ -108,4 +114,4 @@ To be done
 
 [ ] ask Georg about modular forms
 
-[ ] ask Daniel about other suggestions
+[x] ask Daniel about other suggestions
