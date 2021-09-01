@@ -1,15 +1,74 @@
 {% extends "page.html" %}
+{% import "macros.html" as macros %}
+{% import "bibliography.html" as bibliography %}
 
 {% block title %}Betti numbers{% endblock %}
 
 {% block content %}
 
-<p>Something something. Göttsche etc. Also for Hodge numbers.
+<h3>Betti numbers</h3>
 
-<p>Also include Salamon's relation: $2n$-dimensional hyperkähler has
+<p>These are the ranks of the cohomologies $\mathrm{H}^i(X,\mathbb{Z})$.
+
+<h5>Links to other invariants</h5>
+<p>In the <a href="/hodge">Hodge diamond</a> the Betti numbers correspond to sums of the <em>rows</em> in the diamond (although by symmetry this is the same as the columns in this special case): we have that $\operatorname{rk}\operatorname{H}^i(X,\mathbb{Z})=\dim_{\mathbb{C}}\operatorname{H}^i(X,\mathbb{C})=\sum_{p+q=i}\dim_{\mathbb{C}}\operatorname{H}^q(X,\Omega_X^p)$.
+<p>The alternating sum of the Betti numbers is then the <a href="/euler">Euler characteristic</a>.
+
+<h5>Salamon's identity</h5>
+<p>The middle Betti number $\mathrm{b}_{2n}$ on a $2n$-dimensional hyperkähler manifold is in an interesting way related to the other Betti numbers:
 \[
 n\mathrm{b}_{2n}=2\sum_{j=1}^{2n}(-1)^j(3j^2-n)\mathrm{b}_{2n-j}(X)
 \]
+<p>For instance, in the 4-dimensional case, we have
+\[
+\begin{aligned}
+2\cdot\mathrm{b}_4(\mathrm{K3}^{[2]})&=2\left( 10\cdot\mathrm{b}_2(\mathrm{K3}^{[2]}) + 46\mathrm{b}_0(\mathrm{K3}^{[2]}) \right) \\
+&=2\cdot 276 \\
+2\cdot\mathrm{b}_4(\mathrm{Kum}^2)&=2\left( -\mathrm{b}_3(\mathrm{Kum}^2) + 10\cdot\mathrm{b}_2(\mathrm{Kum}^2) + 46\mathrm{b}_0(\mathrm{Kum}^2) \right) \\
+&=2\cdot 108
+\end{aligned}
+\]
+
+
+<h5>All Betti numbers</h5>
+<p>
+  <label for="K3-n-selector">dimension <em>d</em> (2&ndash;20)</label>:
+  <input type="number" id="dimension-selector" name="dimension-selector" min="2" max="20" value="6" step="2">
+
+{% for n in range(2, 21, 2) %}
+<table class="table table-hover" data-dimension="{{ n }}" style="width: auto !important">
+    <thead>
+      <tr>
+        <th class="text-right">Betti number</th>
+        {% for X in hyperkaehlers.values() if X.dimension == n %}<th class="text-right">{{ X.shorthand | safe }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% set varieties = hyperkaehlers.values() | selectattr("dimension", "eq", n) | list %}
+      {% for i in range(n + 1) %}
+        <tr>
+          <th class="text-right">
+            $\mathrm{b}_{ {{ i }} }(X)$
+          </th>
+
+          {% for X in varieties %}
+            <td class="text-right">{{ X.betti[i] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endfor %}
+
+<script type="text/javascript">
+$("table[data-dimension]").hide();
+$("table[data-dimension=6]").show();
+
+$("input#dimension-selector").change(function() {
+  $("table[data-dimension]").hide();
+  $("table[data-dimension=" + $(this).val() + "]").show();
+});
+</script>
 
 {% endblock %}
 

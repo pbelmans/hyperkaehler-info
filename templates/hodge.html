@@ -6,24 +6,28 @@
 
 {% block content %}
 
-<p>Here comes some explanation, with an explanation of the symmetries in the Hodge diamond of a hyperkähler variety
+<h3>Hodge diamond</h3>
+<p>The Hodge diamond is a convenient way of encoding the Hodge numbers $\mathrm{h}^{p,q}=\dim_{\mathbb{C}}\operatorname{H}^q(X,\Omega_X^p)$. For hyperkähler varieties there are <em>three</em> symmetries:
+<ul>
+  <li>Hodge symmetry, which gives $\mathrm{h}^{p,q}(X)=\mathrm{h}^{q,p}(X)$, which is reflection along the vertical axis
+  <li>Serre duality, which gives $\mathrm{h}^{p,q}(X)=\mathrm{h}^{2n-p,2n-q}(X)$, which is point reflection through the middle
+  <li>an additional hyperkähler symmetry, which gives $\mathrm{h}^{p,q}(X)=\mathrm{h}^{2n-p,q}(X)$, which is reflection along the horizontal axis
+</ul>
+<p>In total the symmetries are given by the dihedral group of order 8 (instead of the Klein group of order 4).
 
 <dl>
   <dt>{{ macros.K3n() }}-type</dt>
   <dd class="ml-4">
-  The generating function can be found in {{ bibliography.cite("MR1312161", "Theorem 2.3.14") }}.
-  <!--For an arbitrary surface $S$ it reads
+  The generating function (for an arbitrary surface $S$) can be found in {{ bibliography.cite("MR1312161", "Theorem 2.3.14") }}. 
   \[
     \sum_{n=1}^{+\infty}\mathrm{h}(S^{[n]},x,y)t^n
     =
     \prod_{k=1}^{+\infty}\prod_{p,q=0}^2\left( 1 + (-1)^{p+q+1}x^{p+k-1}y^{q+k-1}t^k \right)^{(-1)^{p+q+1}\mathrm{h}^{p,q}(S)}
   \]
-  -->
 
   <dt>{{ macros.Kumn() }}-type</dt>
   <dd class="ml-4">
-  A closed expression can be found in {{ bibliography.cite("MR1219901", "Corollary 1") }}.
-  <!--, by cancelling the Hodge polynomial of the abelian surface in
+  A closed expression can be found in {{ bibliography.cite("MR1219901", "Corollary 1") }}, by cancelling the Hodge polynomial of the abelian surface in
   \[
     \mathrm{h}(A\times\mathrm{K}^n(A),-x,-y)
     =
@@ -42,7 +46,6 @@
       \right)
     \right)
   \]
-  -->
 
   <dt>{{ macros.OGsix() }}</dt>
   <dd class="ml-4">

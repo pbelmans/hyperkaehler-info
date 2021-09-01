@@ -75,6 +75,11 @@ Thorsten's suggestions
     only for families in higher dimensions
     (leave this out)
 
+[ ] signature
+  it's already there in fact, but because I couldn't find any reference that really uses it I left it out for now
+  is there a nice generating series maybe?
+  I guess one criterion for inclusion could be: are the sequences in the OEIS (right now they are not)
+
 [ ] largest-dimensional known families (e.g. whether we know locally complete algebraic families in this deformation type or not)
   according to Thorsten this is listable:
   - moduli of objects in K3 categories (inside cubic fourfolds and Gushel--Mukai, in the 6-author paper and Perry-Pertusi-Zhao)

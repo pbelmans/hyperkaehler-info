@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h3>Norm</h3>
+<h3>Norm of the Riemann curvature tensor</h3>
 <p>Hitchin and Sawon computed in {{ bibliography.cite("MR1813238") }} the $\mathcal{L}^2$ norm of the Riemann curvature tensor $R$ of a hyperkähler manifold $X$ of (real) dimension $4k$:
 \begin{equation}
   \frac{1}{(192\pi^2k)^k}\frac{||R||^{2k}}{(\operatorname{vol} X)^{k-1}}=\int_X\mathrm{td}_X^{1/2}
@@ -16,7 +16,7 @@
 <table class="table table-sm table-hover">
   <thead>
     <tr>
-      <th>
+      <th class="text-right">dimension
       <th class="text-right">K3</th>
       <th class="text-right">{{ macros.K3n() }}-type</th>
       <th class="text-right">{{ macros.Kumn() }}-type</th>
@@ -24,7 +24,7 @@
       <th class="text-right">{{ macros.OGten() }}</th>
     </tr>
     <tr>
-      <td class="text-right">general case
+      <td class="text-right">
       <td>
       <td class="text-right">$\displaystyle\frac{(n+3)^n}{4^n n!}$</td>
       <td class="text-right">$\displaystyle\frac{(n+1)^{n+1}}{4^n n!}$</td>
@@ -35,7 +35,7 @@
 
   <tbody>
     <tr>
-      <td class="text-right">$n=1$
+      <td class="text-right">2
       <td class="text-right">1</td>
       <td></td>
       <td></td>
@@ -44,7 +44,7 @@
     </tr>
     {% for i in range(2, 11) %}
     <tr>
-      <td class="text-right">$n={{ i }}$
+      <td class="text-right">{{ 2*i }}
       <td>
       <td class="text-right">{{ hyperkaehlers["K3-" + (i | string)].square_root_todd[1] }}
         <br>$\approx{{ "%0.5f" | format(hyperkaehlers["K3-" + (i | string)].square_root_todd[2] | float) }}$

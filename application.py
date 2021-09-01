@@ -28,6 +28,9 @@ class Hyperkaehler:
         self.betti = [sum([self.hodge[j][i - j] for j in range(i + 1) if j <= self.dimension and i - j <= self.dimension]) \
                 for i in range(2*self.dimension + 1)]
 
+        # signature from the Hodge numbers, see Theorem 6.33 of Voisin's Hodge theory and complex algebraic geometry, I
+        self.signature = sum([(-1)**a * self.hodge[a][b] for a in range(self.dimension + 1) for b in range(self.dimension + 1)])
+
         # Chern numbers
         self.chern = dict()
         self.euler = 0
@@ -93,7 +96,7 @@ class Hyperkaehler:
         # shorthand name
         if key == "K3":        self.shorthand = "K3"
         elif key[:3] == "K3-": self.shorthand = "K3<sup>[{}]</sup>-type".format(n)
-        elif key[:3] == "Kum": self.shorthand = "Kum<sup>[{}]</sup>-type".format(n)
+        elif key[:3] == "Kum": self.shorthand = "Kum<sup>{}</sup>-type".format(n)
         elif key == "OG6":     self.shorthand = "OG<sub>6</sub>"
         elif key == "OG10":    self.shorthand = "OG<sub>10</sub>"
 
@@ -207,3 +210,7 @@ def hitchin_sawon():
 @app.route("/hodge")
 def hodge():
     return render_template("hodge.html")
+
+@app.route("/polarisation")
+def polarisation():
+    return render_template("polarisation.html")

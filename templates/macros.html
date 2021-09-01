@@ -19,6 +19,11 @@
 
       <dt class="col-7 text-right"><a href="/euler">Euler characteristic</a></dt>
       <dd class="col-5 text-left">${{ X.euler }}$</dd>
+
+      <!--
+      <dt class="col-7 text-right"><a href="/signature">signature</a></dt>
+      <dd class="col-5 text-left">${{ X.signature }}$</dd>
+      -->
     </dl>
   </div>
 
@@ -35,7 +40,7 @@
       <dt class="col-7 text-right"><a href="/hitchin-sawon">$\int\mathrm{td}_X^{1/2}$</a>
       <dd class="col-5 text-left">${{ X.square_root_todd[1] }}$
 
-      <dt class="col-7 text-right">polarisation type of general fiber
+      <dt class="col-7 text-right"><a href="/polarisation">polarisation type of general fiber</a>
       <dd class="col-5 text-left">${% for polarisation in X.polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
     </dl>
   </div>

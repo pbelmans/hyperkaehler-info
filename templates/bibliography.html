@@ -13,7 +13,7 @@ which does cause some redundancies in the way you write a page...
 {%- if optional -%}{{ optional | safe }}, {% endif %}
 {% for key in keys %}<a href="#{{ key }}">{{ key }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
 ]
-{% endmacro %}
+{%- endmacro %}
 
 
 {% macro references(keys) %}

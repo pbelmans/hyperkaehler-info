@@ -1,0 +1,76 @@
+{% extends "page.html" %}
+{% import "macros.html" as macros %}
+{% import "bibliography.html" as bibliography %}
+
+{% block title %}Polarisation type{% endblock %}
+
+{% block content %}
+
+<h4>Polarisation type</h4>
+<p>Associated to a Lagrangian fibration $X\to\mathbb{P}^n$ one can associate the <em>polarisation type</em>, which describes the polarisation induced by the restriction of an appropriate Kähler class on $X$ to the abelian varieties which appear as generic fiber, see {{ bibliography.cite("MR3556822", "Theorem 1.1") }}.
+<p>For {{ macros.K3n("n") }}-type, and {{ macros.OGsix() }}- resp. {{ macros.OGten() }}-type, because the monodromy group is as large as possible, there is only a single type possible. For {{ macros.Kumn("n") }}-type multiple types can arise.
+
+<dl>
+  <dt>{{ macros.K3n() }}-type</dt>
+  <dd class="ml-4">See {{ bibliography.cite("MR3556822", "Theorem 1.1") }}.
+
+  <dt>{{ macros.Kumn() }}-type</dt>
+  <dd class="ml-4">Multiple types can appear, see {{ bibliography.cite("MR3848435", "Theorem 1.1") }}.
+
+  <dt>{{ macros.OGsix() }}</dt>
+  <dd class="ml-4">See {{ bibliography.cite("MR4197280", "Corollary 1.3") }}.
+
+  <dt>{{ macros.OGten() }}</dt>
+  <dd class="ml-4">See {{ bibliography.cite("2010.12511v2", "Theorem 2.2") }}.
+</dl>
+
+<dl>
+</dl>
+
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th class="text-right">dimension
+      <th class="text-right">K3</th>
+      <th class="text-right">{{ macros.K3n() }}-type</th>
+      <th class="text-right">{{ macros.Kumn() }}-type</th>
+      <th class="text-right">{{ macros.OGsix() }}</th>
+      <th class="text-right">{{ macros.OGten() }}</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class="text-right">2
+      <td class="text-right">$(1)$
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    {% for i in range(2, 11) %}
+    <tr>
+      <td class="text-right">{{ 2*i }}
+      <td>
+
+      <td class="text-right">${% for polarisation in hyperkaehlers["K3-" + (i | string)].polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
+      <td class="text-right">${% for polarisation in hyperkaehlers["Kum-" + (i | string)].polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
+      {% if i == 3 %}
+        <td class="text-right">${% for polarisation in hyperkaehlers["OG6"].polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
+        <td>
+      {% elif i == 5 %}
+        <td>
+        <td class="text-right">${% for polarisation in hyperkaehlers["OG10"].polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
+      {% else %}
+        <td>
+        <td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{{ bibliography.references(["MR3556822", "MR3848435", "MR4197280", "2010.12511v2"]) }}
+
+{% endblock %}
+
