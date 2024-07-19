@@ -1,0 +1,86 @@
+{% extends "page.html" %}
+{% import "macros.html" as macros %}
+{% import "bibliography.html" as bibliography %}
+
+{% block title %}Aut₀{% endblock %}
+
+{% block content %}
+
+<h4>Aut<sub>0</sub></h4>
+<p>The group $\operatorname{Aut}(X)$ acts on the second cohomology,
+and preserves the Beauville&ndash;Bogomolov form.
+We define
+\[
+  \operatorname{Aut}_0(X)
+  :=
+  \ker\left( \operatorname{Aut}(X)\to\mathrm{O}(\mathrm{H}^2(X,\mathbb{Z})) \right)
+\]
+
+<p>There is also the related group
+\[
+  \operatorname{Aut}_{00}(X)
+  :=
+  \ker\left( \operatorname{Aut}(X)\to\mathrm{GL}(\mathrm{H}^\bullet(X,\mathbb{Q})) \right)
+\]
+of automorphisms acting trivially on cohomology,
+which is not known to be a deformation-invariant,
+although it is invariant along polarized deformations.
+
+<p>See {{ bibliography.cite("2203.10391", "Section 2.4") }} for an overview of the state of the art.
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>type</th>
+      <th>$\operatorname{Aut}_0(X)$</th>
+      <th>$\operatorname{Aut}_{00}(X)$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>K3</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>{{ macros.K3n() }}-type</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>{{ macros.Kumn() }}-type</th>
+      <td>($\mathbb{Z}/(n+1)\mathbb{Z}^4\rtimes\mathbb{Z}/2\mathbb{Z}$</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>{{ macros.OGsix() }}</th>
+      <td>$(\mathbb{Z}/2\mathbb{Z})^8$</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>{{ macros.OGten() }}</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </thead>
+</table>
+
+<dl>
+  <dt>{{ macros.K3n() }}-type</dt>
+  <dd class="ml-4">See {{ bibliography.cite("MR0728605", "Proposition 10") }}.
+
+  <dt>{{ macros.Kumn() }}-type</dt>
+  <dd class="ml-4">See {{ bibliography.cite("MR2786223", "Corollary 5") }} and {{ bibliography.cite("MR4138897", "Theorem 1.3") }}.
+
+  <dt>{{ macros.OGsix() }}</dt>
+  <dd class="ml-4">See {{ bibliography.cite("MR3592467", "Theorem 5.2 and Remark 6.9") }}.
+
+  <dt>{{ macros.OGten() }}</dt>
+  <dd class="ml-4">See {{ bibliography.cite("MR3592467", "Theorem 3.1") }}.
+</dl>
+
+{{ bibliography.references(["MR0728605", "MR2786223", "2203.10391", "MR3592467", "MR4138897"]) }}
+
+{% endblock %}
+
+
