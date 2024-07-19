@@ -135,6 +135,14 @@ with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), "bibliograph
 
             bibliography[key] = "{}. \"{}.\" In: <i>{}</i> {} ({}), pp. {}".format(author, title, journal, volume, year, pages)
 
+        if entry.type == "incollection":
+            booktitle = extract_field(entry, "booktitle")
+            volume = extract_field(entry, "volume")
+            year = extract_field(entry, "year")
+            pages = extract_field(entry, "pages")
+
+            bibliography[key] = "{}. \"{}.\" In: <i>{}</i> {} ({}), pp. {}".format(author, title, booktitle, volume, year, pages)
+
         if entry.type == "book":
             year = extract_field(entry, "year")
             series = extract_field(entry, "series")
