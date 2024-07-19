@@ -42,6 +42,9 @@
 
       <dt class="col-7 text-right"><a href="/polarisation">polarisation type of general fiber</a>
       <dd class="col-5 text-left">${% for polarisation in X.polarisations %}{{ polarisation }}{% if not loop.last %},{% endif %}{% endfor %}$
+
+      <dt class="col-7 text-right"><a href="/Aut_0">$\operatorname{Aut}_0(X)$</a>
+      <dd class="col-5 text-left">${{ X.Aut_0 }}$
     </dl>
   </div>
 </div>

@@ -73,6 +73,13 @@ class Hyperkaehler:
         elif key == "OG6":     self.bb = r"\mathrm{U}^3\oplus(-2)^{\oplus2}"
         elif key == "OG10":    self.bb = r"\mathrm{E}_8(-1)^{\oplus2}\oplus\mathrm{U}^3\oplus\mathrm{A}_2(-1)"
 
+        # Aut_0
+        if key == "K3":        self.Aut_0 = r"0"
+        elif key[:3] == "K3-": self.Aut_0 = r"0"
+        elif key[:3] == "Kum": self.Aut_0 = r"(\mathbb{Z}/" + str(n + 1) + "\mathbb{Z})^4\\rtimes\mathbb{Z}/2\mathbb{Z}"
+        elif key == "OG6":     self.Aut_0 = r"(\mathbb{Z}/2\mathbb{Z})^8"
+        elif key == "OG10":    self.Aut_0 = r"0"
+
         # polarisation type of Lagrangian fibration
         self.polarisations = []
         if key == "K3":        self.polarisations.append("(1)")
