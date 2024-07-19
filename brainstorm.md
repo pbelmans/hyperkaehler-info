@@ -115,8 +115,8 @@ My suggestions
 To be done
 ----------
 
-[x] references for all the things Thorsten suggested
+- [x] references for all the things Thorsten suggested
 
-[ ] ask Georg about modular forms
+- [ ] ask Georg about modular forms
 
-[x] ask Daniel about other suggestions
+- [x] ask Daniel about other suggestions
