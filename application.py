@@ -13,6 +13,8 @@ app = Flask(__name__)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
+app.static_folder = "static"
+
 class Hyperkaehler:
     def __init__(self, key, data):
         self.key = key
