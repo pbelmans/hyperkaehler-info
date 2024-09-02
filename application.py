@@ -78,7 +78,7 @@ class Hyperkaehler:
         # Aut_0
         if key == "K3":        self.Aut_0 = r"0"
         elif key[:3] == "K3-": self.Aut_0 = r"0"
-        elif key[:3] == "Kum": self.Aut_0 = r"(\mathbb{Z}/" + str(n + 1) + "\mathbb{Z})^4\\rtimes\mathbb{Z}/2\mathbb{Z}"
+        elif key[:3] == "Kum": self.Aut_0 = r"(\mathbb{Z}/" + str(n + 1) + r"\mathbb{Z})^4\rtimes\mathbb{Z}/2\mathbb{Z}"
         elif key == "OG6":     self.Aut_0 = r"(\mathbb{Z}/2\mathbb{Z})^8"
         elif key == "OG10":    self.Aut_0 = r"0"
 
