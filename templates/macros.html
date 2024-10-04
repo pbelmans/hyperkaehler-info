@@ -29,7 +29,7 @@
 
   <div class="col-md-6">
     <dl class="row basic">
-      <dt class="col-7 text-right"><a href="/beauville-fujiki">Beauville&ndash;Fujiki form</a></dt>
+      <dt class="col-7 text-right"><a href="/bbf">Beauville&ndash;Bogomolov&ndash;Fujiki form</a></dt>
       <dd class="col-5 text-left">${{ X.bb }}$</dd>
 
       <!--
@@ -74,12 +74,12 @@
     {% for i in range(2*X.dimension + 1) %}
     <tr>
       <td class="text-right">
-        {% if i == 2 %}<a style="display: block" href="/beauville-fujiki">{% endif %}
+        {% if i == 2 %}<a style="display: block" href="/bbf">{% endif %}
         $\mathrm{b}_{ {{ i }} }$
         {% if i == 2 %}</a>{% endif %}
       </td>
       <td>
-        {% if i == 2 %}<a style="display: block" href="/beauville-fujiki">{% endif %}
+        {% if i == 2 %}<a style="display: block" href="/bbf">{% endif %}
         {{ X.betti[i] }}</td>
         {% if i == 2 %}</a>{% endif %}
     </tr>

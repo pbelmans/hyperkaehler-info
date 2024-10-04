@@ -200,9 +200,13 @@ def explained():
     return render_template("explained.html")
 
 # specialised pages
-@app.route("/beauville-fujiki")
+@app.route("/bbf")
+def bbf():
+    return render_template("bbf.html")
+
+@app.route("/beauville-fujiki") # legacy URL
 def beauville_fujiki():
-    return render_template("beauville-fujiki.html")
+    return render_template("bbf.html")
 
 @app.route("/betti")
 def betti():
