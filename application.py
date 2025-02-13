@@ -239,3 +239,8 @@ def polarisation():
 @app.route("/Aut_0")
 def aut_zero():
     return render_template("aut_zero.html")
+
+# to make the current year accessible in templates
+@app.context_processor
+def inject_now():
+    return {"now": datetime.utcnow()}
