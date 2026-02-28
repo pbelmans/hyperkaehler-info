@@ -45,6 +45,20 @@
 
       <dt class="col-7 text-right"><a href="/Aut_0">$\operatorname{Aut}_0(X)$</a>
       <dd class="col-5 text-left">${{ X.Aut_0 }}$
+
+      <dt class="col-7 text-right"><a href="/riemann-roch">$\operatorname{RR}_X(t)$</a>
+      <dd class="col-5 text-left">
+        {% if X.key == "K3" %}
+          $\operatorname{RR}_X(t)=\binom{t/2+2}{1}$
+        {% elif X.key[:3] == "K3-" %}
+          $\operatorname{RR}_X(t)=\binom{t/2+{{ X.dimension // 2 + 1 }}+1}{ {{ X.dimension // 2 }} }$
+        {% elif X.key[:3] == "Kum" %}
+          $\operatorname{RR}_X(t)=({{ X.dimension // 2 + 1 }})\binom{t/2+{{ X.dimension // 2 }}}{ {{ X.dimension // 2 }} }$
+        {% elif X.key == "OG6" %}
+          $\operatorname{RR}_X(t)=4\binom{t/2+3}{3}$
+        {% elif X.key == "OG10" %}
+          $\operatorname{RR}_X(t)=\binom{t/2+6}{5}$
+        {% endif %}
     </dl>
   </div>
 </div>

@@ -1,0 +1,46 @@
+{% extends "page.html" %}
+{% import "bibliography.html" as bibliography %}
+
+{% block title %}Riemann&ndash;Roch polynomial{% endblock %}
+
+{% block content %}
+
+<h3>Riemann&ndash;Roch polynomial</h3>
+
+<p>For a compact hyperkähler manifold $X$ of dimension $2n$, Huybrechts shows that the holomorphic Euler characteristic of a line bundle depends only on the Beauville&ndash;Bogomolov square $\operatorname{q}_X(\operatorname{c}_1(L))$, hence there is a polynomial $\operatorname{RR}_X(t)$ such that
+\[
+\chi(X,L)=\operatorname{RR}_X\big(\operatorname{q}_X(\operatorname{c}_1(L))\big).
+\]
+See {{ bibliography.cite("MR1664696", "Section 1") }}.</p>
+
+<p>{{ bibliography.cite("MR4554423") }} proves positivity of the coefficients of this polynomial in full generality. Explicit formulas for all currently known deformation types are collected in {{ bibliography.cite("MR4781884") }}.</p>
+
+<h4 class="mt-4">Known deformation types</h4>
+<ul>
+  <li>K3 and ${\mathrm K3}^{[n]}$-type:
+    \[
+      \operatorname{RR}_{\mathrm{K3}^{[n]}}(t)=\binom{t/2+n+1}{n}.
+    \]
+  </li>
+  <li>$\mathrm{Kum}_n$-type:
+    \[
+      \operatorname{RR}_{\mathrm{Kum}_n}(t)=(n+1)\binom{t/2+n}{n}.
+    \]
+  </li>
+  <li>$\mathrm{OG}_6$-type: same polynomial as $\mathrm{Kum}_3$-type, i.e.
+    \[
+      \operatorname{RR}_{\mathrm{OG}_6}(t)=4\binom{t/2+3}{3}.
+    \]
+  </li>
+  <li>$\mathrm{OG}_{10}$-type: same polynomial as ${\mathrm K3}^{[5]}$-type, i.e.
+    \[
+      \operatorname{RR}_{\mathrm{OG}_{10}}(t)=\binom{t/2+6}{5}.
+    \]
+  </li>
+</ul>
+
+<p>The per-type cards on the main page include the concrete $\operatorname{RR}_X(t)$ used for that type.</p>
+
+{{ bibliography.references(["MR1664696", "MR4554423", "MR4781884"]) }}
+
+{% endblock %}
