@@ -212,7 +212,7 @@
 
     if (structureEl) {
       const text = LIE_ALGEBRA_BY_KEY[familyKey(key)] || "";
-      structureEl.innerHTML = text ? `<small>${text}</small>` : "";
+      structureEl.innerHTML = text;
     }
 
     decompEl.innerHTML = decompositionHtml(record);
