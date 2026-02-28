@@ -32,8 +32,16 @@
   }
 
   function typeset(target) {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise([target]);
+    if (window.renderMathInElement) {
+      window.renderMathInElement(target, {
+        delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "\\[", right: "\\]", display: true},
+          {left: "\\(", right: "\\)", display: false},
+          {left: "$", right: "$", display: false}
+        ],
+        throwOnError: false
+      });
     }
   }
 
@@ -174,7 +182,7 @@
       const m = record.llv[llvKey].m;
       chunks.push(`<span class="llv-comp" data-llv="${llvKey}">$${texWeight(llvKey, false)}${m === 1 ? "" : "^{\\oplus" + m + "}"}$</span>`);
     });
-    return chunks.join(" ");
+    return `<div class="llv-decomposition-line">${chunks.join(" ")}</div><p class="llv-hint"><small>Hover to preview, click/tap to pin a summand.</small></p>`;
   }
 
   function pathClosest(event, selector) {
