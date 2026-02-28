@@ -1,8 +1,9 @@
-name: Render Tests
+name: Render tests
 
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   firefox-render:
@@ -20,10 +21,25 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flask pyyaml pybtex
+          pip install flask pyyaml pybtex selenium
 
       - name: Run route smoke tests
         run: python -m unittest tests/test_pages.py
+
+      - name: Install Firefox runtime dependencies
+        run: |
+          if command -v sudo >/dev/null 2>&1; then
+            SUDO=sudo
+          else
+            SUDO=
+          fi
+          $SUDO apt-get update
+          $SUDO apt-get install -y \
+            libgtk-3-0 \
+            libdbus-glib-1-2 \
+            libx11-xcb1 \
+            libxt6 \
+            libasound2t64 || $SUDO apt-get install -y libasound2
 
       - name: Install Firefox
         uses: browser-actions/setup-firefox@v1
@@ -45,37 +61,56 @@ jobs:
       - name: Verify pages and KaTeX rendering in headless Firefox
         run: |
           set -euo pipefail
-
-          pages=("/" "/llv" "/riemann-roch" "/hodge")
           mkdir -p /tmp/firefox-artifacts
+          python - <<'PY'
+          import re
+          from pathlib import Path
 
-          for path in "${pages[@]}"; do
-            url="http://127.0.0.1:5050${path}"
-            curl -fsS "$url" >/dev/null
+          from application import app
+          from selenium import webdriver
+          from selenium.webdriver.firefox.options import Options
+          from selenium.webdriver.common.by import By
+          from selenium.webdriver.support.ui import WebDriverWait
+          from selenium.webdriver.support import expected_conditions as EC
 
-            name=$(echo "$path" | sed 's#/#_#g')
-            [ -z "$name" ] && name="root"
+          base = "http://127.0.0.1:5050"
+          pages = sorted(
+            rule.rule
+            for rule in app.url_map.iter_rules()
+            if rule.endpoint != "static"
+            and not rule.arguments
+            and "GET" in (rule.methods or set())
+          )
+          artifacts = Path("/tmp/firefox-artifacts")
+          artifacts.mkdir(parents=True, exist_ok=True)
 
-            profile=$(mktemp -d)
-            timeout 45s firefox --headless --new-instance --profile "$profile" --screenshot "/tmp/firefox-artifacts/${name}.png" "$url" >/tmp/firefox-artifacts/${name}.shot.log 2>&1
-            timeout 45s firefox --headless --new-instance --profile "$profile" --dump-dom "$url" >/tmp/firefox-artifacts/${name}.dom.html 2>/tmp/firefox-artifacts/${name}.dom.log
-            rm -rf "$profile"
-          done
+          options = Options()
+          options.add_argument("-headless")
 
-          if ! grep -q 'class="katex"' /tmp/firefox-artifacts/_riemann-roch.dom.html; then
-            echo "KaTeX did not render on /riemann-roch"
-            head -n 120 /tmp/firefox-artifacts/_riemann-roch.dom.html || true
-            exit 1
-          fi
+          driver = webdriver.Firefox(options=options)
+          driver.set_page_load_timeout(60)
+          tex_pattern = re.compile(r"\\\\\(|\\\\\[|\$[^\$\n]+\$|\$\$[^\$\n]+\$\$")
+          strip_script_style = re.compile(r"<(script|style)\b[^>]*>.*?</\1>", re.IGNORECASE | re.DOTALL)
 
-          if ! grep -q 'class="katex"' /tmp/firefox-artifacts/_.dom.html; then
-            echo "KaTeX did not render on /"
-            head -n 120 /tmp/firefox-artifacts/_.dom.html || true
-            exit 1
-          fi
+          try:
+            for path in pages:
+              url = base + path
+              driver.get(url)
+              name = path.replace("/", "_") or "root"
+              driver.save_screenshot(str(artifacts / f"{name}.png"))
+
+              source = strip_script_style.sub("", driver.page_source)
+              has_math_markup = bool(tex_pattern.search(source))
+              if has_math_markup:
+                WebDriverWait(driver, 20).until(
+                  EC.presence_of_element_located((By.CSS_SELECTOR, ".katex"))
+                )
+          finally:
+            driver.quit()
+          PY
 
       - name: Upload Firefox artifacts
-        if: always()
+        if: always() && env.ACT != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: firefox-render-artifacts
