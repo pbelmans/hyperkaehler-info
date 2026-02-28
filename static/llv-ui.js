@@ -182,7 +182,7 @@
       const m = record.llv[llvKey].m;
       chunks.push(`<span class="llv-comp" data-llv="${llvKey}">$${texWeight(llvKey, false)}${m === 1 ? "" : "^{\\oplus" + m + "}"}$</span>`);
     });
-    return `<div class="llv-decomposition-line">${chunks.join(" ")}</div><p class="llv-hint"><small>Hover to preview, click/tap to pin a summand.</small></p>`;
+    return `<div class="llv-decomposition-inner"><div class="llv-decomposition-line">${chunks.join(" ")}</div></div><p class="llv-hint"><small>Hover to preview, click/tap to pin a summand.</small></p>`;
   }
 
   function pathClosest(event, selector) {
