@@ -1,0 +1,16 @@
+[0] Config.pm:308> INFO - This is Biber 2.20 running in TOOL mode
+[0] Config.pm:310> INFO - Config file is '.bibgetter-temp/biber-formatting.conf'
+[0] Config.pm:311> INFO - Logfile is '.bibgetter-temp/bibliography.bib.blg'
+[26] biber-darwin:340> INFO - === Sat Feb 28, 2026, 15:04:50
+[38] Biber.pm:4650> INFO - Looking for bibtex file '.bibgetter-temp/bibliography.bib'
+[38] bibtex.pm:1713> INFO - LaTeX decoding ...
+[40] bibtex.pm:1519> INFO - Found BibTeX data source '.bibgetter-temp/bibliography.bib'
+[57] Biber.pm:1692> INFO - Datamodel validation starting
+[57] Biber.pm:1742> INFO - Datamodel validation complete
+[59] UCollate.pm:68> INFO - Overriding locale 'en_US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[59] UCollate.pm:68> INFO - Overriding locale 'en_US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[59] Biber.pm:4283> INFO - Sorting list 'tool/global//global/global/global' of type 'entry' with template 'tool' and locale 'en_US'
+[59] Biber.pm:4289> INFO - No sort tailoring available for locale 'en_US'
+[61] bibtex.pm:440> INFO - Writing '.bibgetter-temp/bibliography.bib' with encoding 'ascii'
+[61] bibtex.pm:441> INFO - Converting UTF-8 to TeX macros on output
+[61] bibtex.pm:481> INFO - Output to .bibgetter-temp/bibliography.bib

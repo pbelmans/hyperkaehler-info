@@ -160,5 +160,15 @@ $(document).ready(() => {
 });
 </script>
 
+<script src="/static/llv-data.js"></script>
+<script src="/static/llv-ui.js"></script>
+<script type="text/javascript">
+$(document).ready(() => {
+  $(".llv-widget[data-llv-key]").each(function() {
+    LLV.renderWidget(this, $(this).data("llv-key"));
+  });
+});
+</script>
+
 
 {% endblock %}

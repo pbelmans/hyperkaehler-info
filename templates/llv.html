@@ -1,0 +1,29 @@
+{% extends "page.html" %}
+{% import "bibliography.html" as bibliography %}
+
+{% block title %}Looijenga&ndash;Lunts&ndash;Verbitsky decomposition{% endblock %}
+
+{% block content %}
+
+<h3>Looijenga&ndash;Lunts&ndash;Verbitsky (LLV) decomposition</h3>
+<p>The Looijenga&ndash;Lunts&ndash;Verbitsky (LLV) Lie algebra acts on cohomology of every compact hyperkähler manifold. For a very general member of a deformation type, this gives a decomposition of $\operatorname{H}^\ast(X,\mathbb{Q})$ into irreducible representations of an orthogonal Lie algebra determined by $\mathrm{b}_2(X)$.</p>
+<p>For ${\mathrm K3}^{[n]}$-type this is controlled by $\mathfrak{so}(25)$; for $\mathrm{Kum}_n$-type by $\mathfrak{so}(9)$; and for the sporadic types by their corresponding LLV algebras. The decomposition refines the Hodge diamond: each LLV summand breaks into irreducible Hodge structures, and the shifts in degree are visible on the per-type panels on the main page.</p>
+<p>The notation in the interface is: $V_\lambda$ for the irreducible LLV representation of highest weight $\lambda$, and $\bar V$ for the induced Hodge structure on $\operatorname{H}^2(X,\mathbb{Q})$. We display
+\[
+\operatorname{H}^\ast(X,\mathbb{Q})=\bigoplus_{\lambda}V_\lambda^{\oplus m_\lambda}
+\]
+and refine each $V_\lambda$ into irreducible Hodge structures by degree shifts.</p>
+
+<p><strong>Lie algebra structure used in the display.</strong></p>
+<ul>
+  <li>For ${\mathrm K3}^{[n]}$-type: LLV algebra $\mathfrak{g}_{\mathrm{LLV}}\cong\mathfrak{so}(4,\mathrm{b}_2-2)\cong\mathfrak{so}(4,21)$, complexified to type $\mathrm{B}_{12}$.</li>
+  <li>For $\mathrm{Kum}_n$-type: $\mathfrak{g}_{\mathrm{LLV}}\cong\mathfrak{so}(4,5)$, complexified to type $\mathrm{B}_{4}$.</li>
+  <li>For $\mathrm{OG}_6$: the decomposition table used on this site is modeled with the same rank-$4$ orthogonal type as the $\mathrm{Kum}_n$ panel, namely type $\mathrm{B}_{4}$ (complex algebra $\mathfrak{so}(9,\mathbb{C})$).</li>
+  <li>For $\mathrm{OG}_{10}$: $\mathfrak{g}_{\mathrm{LLV}}\cong\mathfrak{so}(4,20)$, complexified to type $\mathrm{D}_{12}$.</li>
+</ul>
+
+<p>Background and expository references: {{ bibliography.cite(["MR1465328", "MR1406664", "MR4516501"]) }}.</p>
+
+{{ bibliography.references(["MR1465328", "MR1406664", "MR4516501"]) }}
+
+{% endblock %}
