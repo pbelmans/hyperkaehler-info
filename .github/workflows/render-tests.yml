@@ -1,0 +1,82 @@
+name: Render Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  firefox-render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flask pyyaml pybtex
+
+      - name: Run route smoke tests
+        run: python -m unittest tests/test_pages.py
+
+      - name: Install Firefox
+        uses: browser-actions/setup-firefox@v1
+
+      - name: Start Flask server
+        run: |
+          export FLASK_APP=application.py
+          nohup flask run --host 127.0.0.1 --port 5050 >/tmp/flask.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:5050/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Flask server did not start in time"
+          cat /tmp/flask.log
+          exit 1
+
+      - name: Verify pages and KaTeX rendering in headless Firefox
+        run: |
+          set -euo pipefail
+
+          pages=("/" "/llv" "/riemann-roch" "/hodge")
+          mkdir -p /tmp/firefox-artifacts
+
+          for path in "${pages[@]}"; do
+            url="http://127.0.0.1:5050${path}"
+            curl -fsS "$url" >/dev/null
+
+            name=$(echo "$path" | sed 's#/#_#g')
+            [ -z "$name" ] && name="root"
+
+            profile=$(mktemp -d)
+            timeout 45s firefox --headless --new-instance --profile "$profile" --screenshot "/tmp/firefox-artifacts/${name}.png" "$url" >/tmp/firefox-artifacts/${name}.shot.log 2>&1
+            timeout 45s firefox --headless --new-instance --profile "$profile" --dump-dom "$url" >/tmp/firefox-artifacts/${name}.dom.html 2>/tmp/firefox-artifacts/${name}.dom.log
+            rm -rf "$profile"
+          done
+
+          if ! grep -q 'class="katex"' /tmp/firefox-artifacts/_riemann-roch.dom.html; then
+            echo "KaTeX did not render on /riemann-roch"
+            head -n 120 /tmp/firefox-artifacts/_riemann-roch.dom.html || true
+            exit 1
+          fi
+
+          if ! grep -q 'class="katex"' /tmp/firefox-artifacts/_.dom.html; then
+            echo "KaTeX did not render on /"
+            head -n 120 /tmp/firefox-artifacts/_.dom.html || true
+            exit 1
+          fi
+
+      - name: Upload Firefox artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-render-artifacts
+          path: /tmp/firefox-artifacts
