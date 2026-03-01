@@ -147,3 +147,19 @@ dl.basic {
 .llv-decomp p {
   margin-bottom: 0.4rem;
 }
+
+// Highlight the targeted bibliography entry when a citation link is clicked
+// and the page jumps to the reference.  The yellow block stays permanently
+// (no fade) and applies to the whole line, with a bit of padding for
+// a rectangular look.
+.bibliography dt:target,
+.bibliography dt:target + dd {
+  background-color: #fffbcc;
+  padding: 0.2rem 0.4rem;
+  display: block;
+}
+
+// Ensure the entry isn't obscured by any sticky header after scroll-jump.
+.bibliography dt {
+  scroll-margin-top: 1.5rem;
+}
