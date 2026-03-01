@@ -127,6 +127,26 @@ bibliography = dict()
 def extract_field(entry, field):
     return pybtex.richtext.Text.from_latex(entry.fields[field]).render_as("html")
 
+def extract_year(entry):
+    """Read year from 'year' or biblatex-style 'date' field (e.g. '2022' or '2022-05-15')."""
+    if "year" in entry.fields:
+        return extract_field(entry, "year")
+    if "date" in entry.fields:
+        return entry.fields["date"][:4]
+    return "?"
+
+def extract_journal(entry):
+    """Read journal from 'journaltitle' (biblatex) or 'journal' (bibtex)."""
+    if "journaltitle" in entry.fields:
+        return extract_field(entry, "journaltitle")
+    return extract_field(entry, "journal")
+
+def extract_school(entry):
+    """Read school from 'institution' (biblatex @thesis) or 'school' (bibtex @phdthesis)."""
+    if "institution" in entry.fields:
+        return extract_field(entry, "institution")
+    return extract_field(entry, "school")
+
 with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), "bibliography.bib"), "r", encoding="utf8") as f:
     data = pybtex.database.parse_string(f.read(), "bibtex")
     for key in data.entries:
@@ -139,9 +159,9 @@ with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), "bibliograph
         title = extract_field(entry, "title")
 
         if entry.type == "article":
-            journal = extract_field(entry, "journal")
+            journal = extract_journal(entry)
             volume = extract_field(entry, "volume")
-            year = extract_field(entry, "year")
+            year = extract_year(entry)
             pages = extract_field(entry, "pages")
 
             bibliography[key] = "{}. \"{}.\" In: <i>{}</i> {} ({}), pp. {}".format(author, title, journal, volume, year, pages)
@@ -149,22 +169,22 @@ with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), "bibliograph
         if entry.type == "incollection":
             booktitle = extract_field(entry, "booktitle")
             volume = extract_field(entry, "volume")
-            year = extract_field(entry, "year")
+            year = extract_year(entry)
             pages = extract_field(entry, "pages")
 
             bibliography[key] = "{}. \"{}.\" In: <i>{}</i> {} ({}), pp. {}".format(author, title, booktitle, volume, year, pages)
 
         if entry.type == "book":
-            year = extract_field(entry, "year")
+            year = extract_year(entry)
             series = extract_field(entry, "series")
             volume = extract_field(entry, "volume")
             pages = extract_field(entry, "pages")
 
             bibliography[key] = "{}. \"{}.\" {}, {}".format(author, title, series, volume)
 
-        if entry.type == "phdthesis":
-            year = extract_field(entry, "year")
-            school = extract_field(entry, "school")
+        if entry.type in ("phdthesis", "thesis"):
+            year = extract_year(entry)
+            school = extract_school(entry)
 
             bibliography[key] = "{}. \"{}.\" PhD thesis, {} ({})".format(author, title, school, year)
 
