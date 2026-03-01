@@ -274,6 +274,31 @@ def monodromy():
 def aut_zero():
     return render_template("aut_zero.html")
 
+# Dynamic routes for hyperkähler types
+@app.route("/K3")
+def k3():
+    return render_template("index.html")
+
+@app.route("/K3-<int:n>")
+def k3_n(n):
+    if n < 2 or n > 10:
+        return "Invalid parameter", 404
+    return render_template("index.html")
+
+@app.route("/Kum-<int:n>")
+def kum_n(n):
+    if n < 2 or n > 10:
+        return "Invalid parameter", 404
+    return render_template("index.html")
+
+@app.route("/OG6")
+def og6():
+    return render_template("index.html")
+
+@app.route("/OG10")
+def og10():
+    return render_template("index.html")
+
 # to make the current year accessible in templates
 @app.context_processor
 def inject_now():

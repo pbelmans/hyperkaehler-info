@@ -119,44 +119,91 @@
 <script type="text/javascript">
 // hide all but the K3^[2] and Kum^2 in the tabs
 $("div[data-type^=K3-], div[data-type^=Kum-]").hide();
-$("div[data-type=K3-2], div[data-type=Kum-2").show();
+$("div[data-type=K3-2], div[data-type=Kum-2]").show();
 
 // selectors for the number of points in K3^[n] and Kum^n-type
 $("input#K3-n-selector").change(function() {
+  const n = $(this).val();
   $("div[data-type^=K3-]").hide();
-  $("div[data-type^=K3-" + $(this).val() + "]").show();
+  $("div[data-type^=K3-" + n + "]").show();
+  // Update URL for K3-n type
+  history.pushState(null, null, "/K3-" + n);
 });
 $("input#Kum-n-selector").change(function() {
+  const n = $(this).val();
   $("div[data-type^=Kum-]").hide();
-  $("div[data-type^=Kum-" + $(this).val() + "]").show();
+  $("div[data-type^=Kum-" + n + "]").show();
+  // Update URL for Kum-n type
+  history.pushState(null, null, "/Kum-" + n);
 });
 
 // make a.tab-link work like a link to a different tab
 $("a.tab-link").click(function(e) {
-  $("a#" + e.currentTarget.href.split("#")[1] + "-tab").tab("show");
+  e.preventDefault();
+  const target = e.currentTarget.href.split("#")[1];
+  $("a#" + target + "-tab").tab("show");
+
+  // Update URL based on tab
+  let newUrl;
+  if (target === "K3") newUrl = "/K3";
+  else if (target === "K3-n") newUrl = "/K3-" + $("#K3-n-selector").val();
+  else if (target === "Kum-n") newUrl = "/Kum-" + $("#Kum-n-selector").val();
+  else if (target === "OG6") newUrl = "/OG6";
+  else if (target === "OG10") newUrl = "/OG10";
+  else newUrl = "/";
+
+  history.pushState(null, null, newUrl);
 });
 
-// make the tab-view on the frontpage remember the selected type
+// Handle initial page load and set active tab based on URL
 $(document).ready(() => {
-  let url = location.href.replace(/\/$/, "");
+  const path = location.pathname;
+  let activeTab = "K3"; // default
 
-  if (location.hash) {
-    const hash = url.split("#");
-    $('ul#table a[href="#'+hash[1]+'"]').tab("show");
-    url = location.href.replace(/\/#/, "#");
-    history.replaceState(null, null, url);
-    setTimeout(() => {
-      $(window).scrollTop(0);
-    }, 400);
+  if (path === "/K3" || path === "/") {
+    activeTab = "K3";
+  } else if (path.startsWith("/K3-")) {
+    activeTab = "K3-n";
+    const n = parseInt(path.split("-")[1]);
+    if (n >= 2 && n <= 10) {
+      $("#K3-n-selector").val(n);
+      $("div[data-type^=K3-]").hide();
+      $("div[data-type=K3-" + n + "]").show();
+    }
+  } else if (path.startsWith("/Kum-")) {
+    activeTab = "Kum-n";
+    const n = parseInt(path.split("-")[1]);
+    if (n >= 2 && n <= 10) {
+      $("#Kum-n-selector").val(n);
+      $("div[data-type^=Kum-]").hide();
+      $("div[data-type=Kum-" + n + "]").show();
+    }
+  } else if (path === "/OG6") {
+    activeTab = "OG6";
+  } else if (path === "/OG10") {
+    activeTab = "OG10";
   }
 
-  $('a[data-toggle="tab"]').on("click", function() {
-    let newUrl;
-    const hash = $(this).attr("href");
-    if (hash == "#K3") newUrl = url.split("#")[0];
-    else newUrl = url.split("#")[0] + hash;
-    history.replaceState(null, null, newUrl);
-  });
+  // Activate the correct tab
+  $("ul#table a").removeClass("active").attr("aria-selected", false);
+  $("div.tab-pane").removeClass("show active");
+  $("#" + activeTab + "-tab").addClass("active").attr("aria-selected", true);
+  $("#" + activeTab).addClass("show active");
+});
+
+// Handle tab clicks to update URL
+$('a[data-toggle="tab"]').on("click", function() {
+  const target = $(this).attr("href").substring(1); // remove #
+  let newUrl;
+
+  if (target === "K3") newUrl = "/K3";
+  else if (target === "K3-n") newUrl = "/K3-" + $("#K3-n-selector").val();
+  else if (target === "Kum-n") newUrl = "/Kum-" + $("#Kum-n-selector").val();
+  else if (target === "OG6") newUrl = "/OG6";
+  else if (target === "OG10") newUrl = "/OG10";
+  else newUrl = "/";
+
+  history.pushState(null, null, newUrl);
 });
 </script>
 
