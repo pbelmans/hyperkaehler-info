@@ -46,6 +46,18 @@
       <dt class="col-7 text-right"><a href="/Aut_0">$\operatorname{Aut}_0(X)$</a>
       <dd class="col-5 text-left">${{ X.Aut_0 }}$
 
+      <dt class="col-7 text-right"><a href="/monodromy">$\operatorname{Mon}^2(X)$</a>
+      <dd class="col-5 text-left no-break-math">
+        {% if X.key == "K3" %}
+          $\operatorname{O}^{+}(\operatorname{H}^2(X,\mathbb{Z}))$
+        {% elif X.key[:3] == "K3-" %}
+          $\mathrm{W}_X$
+        {% elif X.key[:3] == "Kum" %}
+          $\ker(\det\chi\colon\mathrm{W}_X\to\{\pm1\})$
+        {% elif X.key == "OG6" or X.key == "OG10" %}
+          $\operatorname{O}^{+}(\operatorname{H}^2(X,\mathbb{Z}))$
+        {% endif %}
+
       <dt class="col-7 text-right"><a href="/riemann-roch">$\operatorname{RR}_X(t)$</a>
       <dd class="col-5 text-left no-break-math">
         {% if X.key == "K3" %}

@@ -246,6 +246,10 @@ def riemann_roch():
 def polarisation():
     return render_template("polarisation.html")
 
+@app.route("/monodromy")
+def monodromy():
+    return render_template("monodromy.html")
+
 @app.route("/Aut_0")
 def aut_zero():
     return render_template("aut_zero.html")
