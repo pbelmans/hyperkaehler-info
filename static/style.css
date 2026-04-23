@@ -65,46 +65,93 @@ dl.basic {
   max-width: 400px;
 }
 
+.no-break-math,
+.no-break-math .katex {
+  white-space: nowrap !important;
+}
+
 .llv-widget {
   margin: 0.75rem auto 0;
 }
+
 .llv-decomposition {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
   line-height: 2.1;
 }
-.llv-decomposition-line {
-  line-height: 2.1;
+
+.llv-decomposition-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 0.35rem;
+  row-gap: 0.15rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  white-space: normal;
 }
+
+.llv-decomposition-chunk {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
 .llv-hint {
   margin-top: -0.35rem;
   margin-bottom: 0.35rem;
 }
+
 .llv-diamond {
+  position: relative;
   margin-top: 0.5rem;
   margin-bottom: 0.75rem;
-  overflow-x: auto;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
 }
+
 .llv-diamond-inner {
-  width: fit-content;
-  margin: 0 auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
   white-space: nowrap;
 }
+
 .llv-cell {
   display: inline-block;
   width: 5.5rem;
 }
+
 .llv-comp,
 .llv-full,
 .llv-hs-comp {
   cursor: pointer;
 }
+
 .llv-active {
   color: #dc3545;
 }
+
 .llv-zero {
   color: #888;
 }
+
 .llv-decomp p {
   margin-bottom: 0.4rem;
 }
 
-/*# sourceMappingURL=style.css.map */
+.bibliography dt:target,
+.bibliography dt:target + dd {
+  background-color: #fffbcc;
+  padding: 0.2rem 0.4rem;
+  display: block;
+}
+
+.bibliography dt {
+  scroll-margin-top: 1.5rem;
+}

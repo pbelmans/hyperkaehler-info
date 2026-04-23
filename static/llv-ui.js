@@ -174,15 +174,17 @@
   }
 
   function decompositionHtml(record) {
-    const chunks = [`<span class="llv-full">$\\operatorname{H}^\\ast(${record.tex},\\mathbf{Q})$</span>`, "$=$"];
+    const chunks = [
+      `<span class="llv-decomposition-chunk"><span class="llv-full">$\\operatorname{H}^\\ast(${record.tex},\\mathbf{Q})$</span></span>`
+    ];
     record["llv-comps"].forEach((llvKey, idx) => {
-      if (idx > 0) {
-        chunks.push("$\\oplus$");
-      }
       const m = record.llv[llvKey].m;
-      chunks.push(`<span class="llv-comp" data-llv="${llvKey}">$${texWeight(llvKey, false)}${m === 1 ? "" : "^{\\oplus" + m + "}"}$</span>`);
+      const operator = idx === 0 ? "$=$" : "$\\oplus$";
+      chunks.push(
+        `<span class="llv-decomposition-chunk">${operator} <span class="llv-comp" data-llv="${llvKey}">$${texWeight(llvKey, false)}${m === 1 ? "" : "^{\\oplus" + m + "}"}$</span></span>`
+      );
     });
-    return `<div class="llv-decomposition-inner"><div class="llv-decomposition-line">${chunks.join(" ")}</div></div><p class="llv-hint"><small>Hover to preview, click/tap to pin a summand.</small></p>`;
+    return `<div class="llv-decomposition-inner">${chunks.join("")}</div><p class="llv-hint"><small>Hover to preview, click/tap to pin a summand.</small></p>`;
   }
 
   function pathClosest(event, selector) {
