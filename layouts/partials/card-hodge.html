@@ -1,0 +1,20 @@
+{{- /* Hodge diamond for one variety. Context: a hyperkaehler record.
+       Mirrors the hodge() macro in templates/macros.html: one absolutely
+       positioned row per degree i, with cells h^{j, i-j} for the valid j. */ -}}
+{{- $X := . -}}
+{{- $dim := int $X.dimension -}}
+<h5 class="mt-3 text-center"><a href="/hodge">Hodge diamond</a></h5>
+<div class="diamond" style="position: relative; overflow: hidden; width: 100%; margin: 0 auto; text-align: center; word-wrap: none">
+  {{- range $i := seq 0 (mul 2 $dim) }}
+    {{- $js := slice -}}
+    {{- range $j := seq 0 $i -}}
+      {{- if and (le $j $dim) (le (sub $i $j) $dim) -}}{{- $js = $js | append $j -}}{{- end -}}
+    {{- end }}
+    <div style="overflow: hidden; position: absolute; left: -50%; right: -50%">
+    {{- $last := sub (len $js) 1 -}}
+    {{- range $idx, $j := $js }}
+      <span style="display: inline-block; width: 5.5rem">{{ index (index $X.hodge $j) (sub $i $j) | int }}</span>
+      {{- if eq $idx $last }}</div><br style="clear: both">{{ end -}}
+    {{- end }}
+  {{- end }}
+</div>

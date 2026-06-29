@@ -1,0 +1,29 @@
+---
+title: "Betti numbers"
+---
+<h3>Betti numbers</h3>
+
+<p>These are the ranks of the cohomologies $\mathrm{H}^i(X,\mathbb{Z})$.
+
+<h5>Links to other invariants</h5>
+<p>In the <a href="/hodge">Hodge diamond</a> the Betti numbers correspond to sums of the <em>rows</em> in the diamond (although by symmetry this is the same as the columns in this special case): we have that $\operatorname{rk}\operatorname{H}^i(X,\mathbb{Z})=\dim_{\mathbb{C}}\operatorname{H}^i(X,\mathbb{C})=\sum_{p+q=i}\dim_{\mathbb{C}}\operatorname{H}^q(X,\Omega_X^p)$.
+<p>The alternating sum of the Betti numbers is then the <a href="/euler">Euler characteristic</a>.
+
+<h5>Salamon's identity</h5>
+<p>The middle Betti number $\mathrm{b}_{2n}$ on a $2n$-dimensional hyperkähler manifold is in an interesting way related to the other Betti numbers:
+\[
+n\mathrm{b}_{2n}=2\sum_{j=1}^{2n}(-1)^j(3j^2-n)\mathrm{b}_{2n-j}(X)
+\]
+<p>For instance, in the 4-dimensional case, we have
+\[
+\begin{aligned}
+2\cdot\mathrm{b}_4(\mathrm{K3}^{[2]})&=2\left( 10\cdot\mathrm{b}_2(\mathrm{K3}^{[2]}) + 46\mathrm{b}_0(\mathrm{K3}^{[2]}) \right) \\
+&=2\cdot 276 \\
+2\cdot\mathrm{b}_4(\mathrm{Kum}^2)&=2\left( -\mathrm{b}_3(\mathrm{Kum}^2) + 10\cdot\mathrm{b}_2(\mathrm{Kum}^2) + 46\mathrm{b}_0(\mathrm{Kum}^2) \right) \\
+&=2\cdot 108
+\end{aligned}
+\]
+
+
+<h5>All Betti numbers</h5>
+{{< betti-tables >}}

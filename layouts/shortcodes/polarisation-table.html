@@ -1,0 +1,46 @@
+{{- /* Polarisation-type comparison table. Mirrors the table in templates/polarisation.html. */ -}}
+{{- $hks := hugo.Data.hyperkaehlers -}}
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th class="text-right">dimension
+      <th class="text-right">K3</th>
+      <th class="text-right">K3<sup>[<i>n</i>]</sup>-type</th>
+      <th class="text-right">Kum<sup><i>n</i></sup>-type</th>
+      <th class="text-right">OG<sub>6</sub></th>
+      <th class="text-right">OG<sub>10</sub></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class="text-right">2
+      <td class="text-right">$(1)$
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    {{ range $i := seq 2 10 }}
+    {{ $k3 := index $hks (printf "K3-%d" $i) }}
+    {{ $kum := index $hks (printf "Kum-%d" $i) }}
+    <tr>
+      <td class="text-right">{{ mul 2 $i }}
+      <td>
+
+      <td class="text-right">${{ range $j, $p := $k3.polarisations }}{{ if $j }},{{ end }}{{ $p }}{{ end }}$
+      <td class="text-right">${{ range $j, $p := $kum.polarisations }}{{ if $j }},{{ end }}{{ $p }}{{ end }}$
+      {{ if eq $i 3 }}
+        <td class="text-right">${{ range $j, $p := (index $hks "OG6").polarisations }}{{ if $j }},{{ end }}{{ $p }}{{ end }}$
+        <td>
+      {{ else if eq $i 5 }}
+        <td>
+        <td class="text-right">${{ range $j, $p := (index $hks "OG10").polarisations }}{{ if $j }},{{ end }}{{ $p }}{{ end }}$
+      {{ else }}
+        <td>
+        <td>
+      {{ end }}
+    </tr>
+    {{ end }}
+  </tbody>
+</table>

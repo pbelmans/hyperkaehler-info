@@ -1,0 +1,25 @@
+baseURL = "https://hyperkaehler.info/"
+locale = "en-us"
+title = "hyperkaehler.info"
+disableKinds = ["taxonomy", "term", "RSS"]
+# Preserve case in URLs so the type pages stay at /K3, /K3-2, /Kum-2, /OG6, /OG10,
+# /Aut_0 (matching the links in the cards and the routing JS). Without this Hugo
+# lowercases them, which 404s on case-sensitive hosts like GitHub Pages.
+disablePathToLower = true
+
+# Sources of truth (data.yml, bibliography.bib) live at the repo root; the Hugo
+# data/ files are generated from them by scripts/build-data.mjs and build-bib.mjs.
+# Don't let Hugo read the raw sources as content/data.
+ignoreFiles = ['data\.yml$', 'bibliography\.bib$']
+
+[markup.goldmark.renderer]
+unsafe = true
+
+# Prose pages are authored as .html content (Goldmark is skipped for those, so
+# raw HTML and $...$ math pass through verbatim). Passthrough is configured as a
+# safety net should any .md content be added later, using the KaTeX delimiters.
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]

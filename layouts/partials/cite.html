@@ -1,0 +1,7 @@
+{{- /* Inline citation. Context: dict "keys" (slice of citation keys) and
+       optional "optional" (a locator string like "Theorem 1.1", rendered first).
+       Mirrors the cite() macro in templates/bibliography.html. Output is trimmed
+       of surrounding whitespace so it sits cleanly inside a sentence. */ -}}
+{{- $keys := .keys -}}
+{{- $optional := .optional -}}
+{{- "[" }}{{ with $optional }}{{ . | safeHTML }}, {{ end }}{{ range $i, $k := $keys }}{{ if $i }}, {{ end }}<a href="#{{ $k }}">{{ $k }}</a>{{ end }}{{ "]" -}}

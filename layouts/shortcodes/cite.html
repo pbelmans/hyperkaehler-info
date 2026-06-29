@@ -1,0 +1,7 @@
+{{- /* Inline citation for content pages. First argument: comma-separated
+       citation keys (usually one). Optional second argument: a locator string
+       such as "Theorem 1.1". Wraps the cite.html partial. */ -}}
+{{- $keys := split (.Get 0) "," -}}
+{{- $loc := "" -}}
+{{- if gt (len .Params) 1 }}{{ $loc = .Get 1 }}{{ end -}}
+{{- partial "cite.html" (dict "keys" $keys "optional" $loc) -}}

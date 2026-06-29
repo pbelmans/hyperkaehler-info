@@ -1,0 +1,10 @@
+{{- /* References block. Context: a slice of citation keys.
+       Mirrors the references() macro in templates/bibliography.html. */ -}}
+<hr>
+<h5>References</h5>
+<dl class="bibliography">
+{{ range . }}
+  <dt id="{{ . }}">{{ . }}
+  <dd class="ml-4">{{ index hugo.Data.bibliography . | safeHTML }}
+{{ end }}
+</dl>

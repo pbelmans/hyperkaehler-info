@@ -1,0 +1,74 @@
+{{- /* The full data card for one variety. Context: a hyperkaehler record.
+       Mirrors the hyperkaehler() macro in templates/macros.html. Numeric values
+       and the mon2/rr LaTeX are precomputed in scripts/build_data.py, so this
+       template contains no mathematics. */ -}}
+{{- $X := . -}}
+<div data-type="{{ $X.key }}">
+
+<h4 class="text-center">{{ $X.name | safeHTML }}</h4>
+
+<div class="row">
+  <div class="col-md-6">
+    <dl class="row basic">
+      <dt class="col-7 text-right">complex dimension</dt>
+      <dd class="col-5 text-left">{{ $X.dimension | int }}</dd>
+
+      <dt class="col-7 text-right">number of moduli</dt>
+      <dd class="col-5 text-left">{{ sub (index $X.betti 2 | int) 2 }}</dd>
+
+      <dt class="col-7 text-right"><a href="/euler">Euler characteristic</a></dt>
+      <dd class="col-5 text-left">${{ $X.euler }}$</dd>
+
+      <!--
+      <dt class="col-7 text-right"><a href="/signature">signature</a></dt>
+      <dd class="col-5 text-left">${{ $X.signature | int }}$</dd>
+      -->
+    </dl>
+  </div>
+
+  <div class="col-md-6">
+    <dl class="row basic">
+      <dt class="col-7 text-right"><a href="/bbf">Beauville&ndash;Bogomolov&ndash;Fujiki form</a></dt>
+      <dd class="col-5 text-left no-break-math">${{ $X.bb | safeHTML }}$</dd>
+
+      <!--
+      <dt class="col-7 text-right"><a href="/fujiki">Fujiki constant</a></dt>
+      <dd class="col-5 text-left">{{ $X.fujiki | int }}</dd>
+      -->
+
+      <dt class="col-7 text-right"><a href="/hitchin-sawon">$\int\mathrm{td}_X^{1/2}$</a>
+      <dd class="col-5 text-left">${{ $X.square_root_todd.reduced }}$
+
+      <dt class="col-7 text-right"><a href="/polarisation">polarisation type of general fiber</a>
+      <dd class="col-5 text-left">${{ range $i, $p := $X.polarisations }}{{ if $i }},{{ end }}{{ $p | safeHTML }}{{ end }}$
+
+      <dt class="col-7 text-right"><a href="/Aut_0">$\operatorname{Aut}_0(X)$</a>
+      <dd class="col-5 text-left">${{ $X.Aut_0 | safeHTML }}$
+
+      <dt class="col-7 text-right"><a href="/monodromy">$\operatorname{Mon}^2(X)$</a>
+      <dd class="col-5 text-left no-break-math">
+        ${{ $X.mon2 | safeHTML }}$
+
+      <dt class="col-7 text-right"><a href="/riemann-roch">$\operatorname{RR}_X(t)$</a>
+      <dd class="col-5 text-left no-break-math">
+        ${{ $X.rr | safeHTML }}$
+    </dl>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 text-center">{{ partial "card-chern.html" $X }}</div>
+  <div class="col-md-6 text-center">{{ partial "card-betti.html" $X }}</div>
+</div>
+
+{{ partial "card-hodge.html" $X }}
+
+<h5 class="mt-3 text-center"><a href="/llv">Looijenga&ndash;Lunts&ndash;Verbitsky (LLV) decomposition</a></h5>
+<div class="llv-widget" data-llv-key="{{ $X.key }}">
+  <p class="llv-structure text-center"></p>
+  <div class="llv-decomposition text-center"></div>
+  <div class="llv-diamond text-center"></div>
+  <div class="llv-hodge"></div>
+</div>
+
+</div>

@@ -1,0 +1,3 @@
+{{- /* References block for content pages. Argument: comma-separated citation
+       keys. Wraps the references.html partial. */ -}}
+{{- partial "references.html" (split (.Get 0) ",") -}}

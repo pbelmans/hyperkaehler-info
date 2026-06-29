@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>{{ .Title }}&mdash;hyperkaehler.info</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "apple-touch-icon.png" | relURL }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ "favicon-32x32.png" | relURL }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16x16.png" | relURL }}">
+  <link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="the geography of compact irreducible holomorphic symplectic (or hyperkähler) varieties" />
+  <meta name="twitter:image" content="{{ "android-chrome-512x512.png" | absURL }}">
+
+  <meta name="title" content="hyperkaehler.info">
+  <meta name="description" content="the geography of compact irreducible holomorphic symplectic (or hyperkähler) varieties">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:title" content="hyperkaehler.info">
+  <meta property="og:description" content="the geography of compact irreducible holomorphic symplectic (or hyperkähler) varieties">
+  <meta property="og:image" content="{{ "android-chrome-512x512.png" | absURL }}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  {{ $style := resources.Get "style.scss" | css.Sass (dict "outputStyle" "compressed") | fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.renderMathInElement) {
+    return;
+  }
+  window.renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false},
+      {left: "$", right: "$", display: false}
+    ],
+    throwOnError: false
+  });
+});
+  </script>
+
+  <script defer data-domain="hyperkaehler.info" src="https://plausible.io/js/script.js"></script>
+</head>
+
+<body>
+{{ partial "navigation.html" . }}
+
+<div id="title" class="sticky-top">
+  <h1><a href="/"><span class="text-danger">H</span>yper<span class="text-danger">k</span><span class="text-success font-italic text-lowercase" style="font-variant: normal; font-size: .8em">ae</span>hler.<span style="font-variant: normal; font-size: .7em">info</span></a></h1>
+
+  <p id="slogan">the geography of compact irreducible holomorphic symplectic (or hyperkähler) varieties</p>
+</div>
+
+<div class="container" id="content" style="max-width: 1200px">
+  {{ block "main" . }}{{ end }}
+</div>
+
+</body>
+</html>

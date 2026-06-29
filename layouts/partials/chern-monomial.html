@@ -1,0 +1,4 @@
+{{- /* Format a Chern monomial as LaTeX. Context: a list of [degree, exponent]
+       pairs. Mirrors the chern_monomial() macro in templates/macros.html
+       (the exponent braces are left empty when the exponent is 1). */ -}}
+${{ range . }}\mathrm{c}_{ {{ index . 0 | int }} }^{ {{ $e := index . 1 | int }}{{ if ne $e 1 }}{{ $e }}{{ end }} }{{ end }}$

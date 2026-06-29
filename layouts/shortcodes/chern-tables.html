@@ -1,0 +1,49 @@
+{{- /* Per-dimension Chern-number comparison tables + dimension selector.
+       The monomial order per dimension follows the first variety of that
+       dimension (already sorted by value descending in build_data.py).
+       Mirrors the data-driven part of templates/chern.html. */ -}}
+{{- $hks := sort hugo.Data.hyperkaehlers "sortindex" -}}
+<p>
+  <label for="K3-n-selector">dimension <em>d</em> (2&ndash;20)</label>:
+  <input type="number" id="dimension-selector" name="dimension-selector" min="2" max="20" value="6" step="2">
+
+{{ range $n := seq 2 2 20 }}
+{{ $vs := slice }}{{ range $hks }}{{ if eq (int .dimension) $n }}{{ $vs = $vs | append . }}{{ end }}{{ end }}
+{{ $first := index $vs 0 }}
+{{ $nmons := len $first.chern }}
+<table class="table table-hover" data-dimension="{{ $n }}" style="width: auto !important">
+    <thead>
+      <tr>
+        <th class="text-right">monomial</th>
+        {{ range $vs }}<th class="text-right">{{ .shorthand | safeHTML }}</th>{{ end }}
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $mi, $c := $first.chern }}
+        {{ $key := printf "%v" $c.monomial }}
+        <tr>
+          <th class="text-right">
+            {{ if eq $mi (sub $nmons 1) }}<a href="/euler">{{ end }}
+            {{ partial "chern-monomial.html" $c.monomial }}
+            {{ if eq $mi (sub $nmons 1) }}</a>{{ end }}
+          </th>
+
+          {{ range $X := $vs }}
+            {{ $val := "" }}{{ range $X.chern }}{{ if eq (printf "%v" .monomial) $key }}{{ $val = .value }}{{ end }}{{ end }}
+            <td class="text-right">{{ $val }}</td>
+          {{ end }}
+        </tr>
+      {{ end }}
+    </tbody>
+  </table>
+{{ end }}
+
+<script type="text/javascript">
+$("table[data-dimension]").hide();
+$("table[data-dimension=6]").show();
+
+$("input#dimension-selector").change(function() {
+  $("table[data-dimension]").hide();
+  $("table[data-dimension=" + $(this).val() + "]").show();
+});
+</script>

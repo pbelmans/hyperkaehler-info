@@ -1,0 +1,14 @@
+{{/* Generate the deep-link type pages (/K3, /K3-2 … /OG10). Each renders the
+      same tabbed overview as the home page (layout "overview"); the client-side
+      script opens the tab matching the URL. Mirrors the Flask routes that all
+      returned index.html. */}}
+{{ $types := slice "K3" "K3-2" "K3-3" "K3-4" "K3-5" "K3-6" "K3-7" "K3-8" "K3-9" "K3-10" "Kum-2" "Kum-3" "Kum-4" "Kum-5" "Kum-6" "Kum-7" "Kum-8" "Kum-9" "Kum-10" "OG6" "OG10" }}
+{{ range $types }}
+  {{ $.AddPage (dict
+    "path" .
+    "url" (printf "/%s/" .)
+    "title" "Overview"
+    "layout" "overview"
+    "content" (dict "mediaType" "text/html" "value" "")
+  ) }}
+{{ end }}
