@@ -1,0 +1,17 @@
+{
+  "name": "hyperkaehler-info",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "bib": "node scripts/build-bib.mjs",
+    "build": "npm run data && npm run bib && hugo --gc --minify",
+    "serve": "npm run data && npm run bib && hugo server"
+  },
+  "devDependencies": {
+    "@citation-js/core": "^0.7.14",
+    "@citation-js/plugin-bibtex": "^0.7.14",
+    "@citation-js/plugin-csl": "^0.7.14",
+    "js-yaml": "^4.1.0"
+  }
+}

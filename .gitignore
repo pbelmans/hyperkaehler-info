@@ -1,2 +1,23 @@
+# editor / OS
 *.swp
-__pycache__*
+.DS_Store
+__pycache__/
+
+# legacy / local (safe to delete)
+.venv/
+.jekyll-cache/
+
+# Hugo
+/public/
+/resources/
+.hugo_build.lock
+
+# Node
+/node_modules/
+
+# generated data (rebuilt from data.yml + bibliography.bib by scripts/build-*.mjs)
+/data/hyperkaehlers.json
+/data/bibliography.json
+
+# backup written by scripts/unicode-accents.mjs
+*.bib.bak
