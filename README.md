@@ -78,3 +78,19 @@ To normalise LaTeX accent commands in `bibliography.bib` to Unicode:
 ```shell
 node scripts/unicode-accents.mjs
 ```
+
+## How to cite
+
+The website is archived on Zenodo. To cite the version-independent latest
+release, use the concept DOI
+[10.5281/zenodo.21296892](https://doi.org/10.5281/zenodo.21296892).
+
+```bibtex
+@online{hyperkaehler,
+  author = {Belmans, Pieter},
+  title  = {hyperkaehler.info --- the geography of compact irreducible holomorphic symplectic (or hyperk\"ahler) varieties},
+  url    = {https://hyperkaehler.info},
+  doi    = {10.5281/zenodo.21296892},
+  year   = {2026},
+}
+```
