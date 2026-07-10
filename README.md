@@ -1,5 +1,7 @@
 # Hyperkaehler.info
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21296892.svg)](https://doi.org/10.5281/zenodo.21296892)
+
 The code behind [Hyperkaehler.info](https://hyperkaehler.info), a static site
 built with [Hugo](https://gohugo.io).
 
