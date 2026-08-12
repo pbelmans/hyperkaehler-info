@@ -146,6 +146,19 @@ function rrLatex(X) {
   if (X.key === "OG6") return String.raw`\operatorname{RR}_X(t)=4\binom{t/2+3}{3}`;
   if (X.key === "OG10") return String.raw`\operatorname{RR}_X(t)=\binom{t/2+6}{5}`;
 }
+// possible divisibilities of a primitive class in H^2(X,Z): the divisors of
+// the exponent of the discriminant group, which are all realised since the
+// BBF lattice contains a hyperbolic plane as a direct summand
+function divisibilities(X) {
+  let exponent = 1; // K3: unimodular
+  if (X.key.startsWith("K3-")) exponent = X.dimension - 2; // 2(n-1)
+  else if (X.key.startsWith("Kum")) exponent = X.dimension + 2; // 2(n+1)
+  else if (X.key === "OG6") exponent = 2;
+  else if (X.key === "OG10") exponent = 3;
+  const divisors = [];
+  for (let d = 1; d <= exponent; d++) if (exponent % d === 0) divisors.push(d);
+  return divisors;
+}
 
 function record(X, sortindex) {
   // Chern monomials ordered by value descending (mirrors the Jinja
@@ -174,6 +187,7 @@ function record(X, sortindex) {
     shorthand: X.shorthand,
     mon2: mon2Latex(X),
     rr: rrLatex(X),
+    divisibilities: divisibilities(X),
   };
 }
 

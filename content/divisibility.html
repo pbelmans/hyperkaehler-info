@@ -1,0 +1,67 @@
+---
+title: "Divisibility"
+---
+<h4>Divisibility</h4>
+<p>The <em>divisibility</em> of a primitive class $\lambda\in\operatorname{H}^2(X,\mathbb{Z})$ is the positive integer $\operatorname{div}(\lambda)$ generating the ideal
+\[
+  (\lambda,\operatorname{H}^2(X,\mathbb{Z}))
+  =
+  \operatorname{div}(\lambda)\mathbb{Z}
+  \subseteq
+  \mathbb{Z},
+\]
+where the pairing is the <a href="/bbf">Beauville&ndash;Bogomolov&ndash;Fujiki form</a>.
+Together with the square $\mathrm{q}_X(\lambda)$ it is the basic numerical invariant of a class:
+both are invariant under the <a href="/monodromy">monodromy group</a>,
+and the pairs $(\mathrm{q}_X(\lambda),\operatorname{div}(\lambda))$ are used to enumerate the polarised deformation types of hyperkähler varieties,
+see {{< cite "MR2964480" >}}.
+
+<p>The class $\lambda/\operatorname{div}(\lambda)$ lies in the dual lattice,
+and defines an element of order $\operatorname{div}(\lambda)$ in the <a href="/bbf">discriminant group</a> of $\operatorname{H}^2(X,\mathbb{Z})$,
+so that the divisibility divides the exponent of the discriminant group.
+Conversely, every divisor of the exponent is the divisibility of some primitive class,
+because $\operatorname{H}^2(X,\mathbb{Z})$ contains a hyperbolic plane as a direct summand.
+This gives the following possibilities.
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>type</th>
+      <th><a href="/bbf">discriminant group</a></th>
+      <th>possible divisibilities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>K3</th>
+      <td>$0$</td>
+      <td>$1$</td>
+    </tr>
+    <tr>
+      <th>K3<sup>[<i>n</i>]</sup>-type</th>
+      <td>$\mathbb{Z}/(2n-2)\mathbb{Z}$</td>
+      <td>divisors of $2n-2$</td>
+    </tr>
+    <tr>
+      <th>Kum<sup><i>n</i></sup>-type</th>
+      <td>$\mathbb{Z}/(2n+2)\mathbb{Z}$</td>
+      <td>divisors of $2n+2$</td>
+    </tr>
+    <tr>
+      <th>OG<sub>6</sub></th>
+      <td>$(\mathbb{Z}/2\mathbb{Z})^{\oplus2}$</td>
+      <td>$1,2$</td>
+    </tr>
+    <tr>
+      <th>OG<sub>10</sub></th>
+      <td>$\mathbb{Z}/3\mathbb{Z}$</td>
+      <td>$1,3$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Which pairs $(\mathrm{q}_X(\lambda),\operatorname{div}(\lambda))$ are realised,
+and how they classify monodromy orbits of primitive classes,
+is a more refined question, see {{< cite "MR2964480" >}}.
+
+{{< references "MR2964480" >}}
