@@ -154,6 +154,167 @@ dl.basic {
   margin-bottom: 0.4rem;
 }
 
+.octahedron-widget {
+  margin: 0.75rem auto 1.25rem;
+  font-size: 14px;
+}
+
+.octahedron-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.octahedron-controls {
+  width: 100%;
+  max-width: 38rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.octahedron-controls input {
+  display: block;
+  width: 100%;
+}
+
+.octahedron-controls input {
+  accent-color: #035096;
+}
+
+.octahedron-degree-scale {
+  display: flex;
+  justify-content: space-between;
+  color: #666;
+}
+
+.octahedron-reader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 1rem;
+  align-items: start;
+  width: 100%;
+}
+
+.octahedron-orientation {
+  padding-left: 1rem;
+  border-left: 1px solid #e1e1e1;
+}
+
+.octahedron-orientation-title,
+.octahedron-slice-title {
+  margin: 0 0 0.35rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.octahedron-canvas {
+  display: block;
+  width: 100%;
+  height: 13rem;
+}
+
+.octahedron-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.8rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: #555;
+}
+
+.octahedron-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.octahedron-key {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.65rem;
+}
+
+.octahedron-key-outline {
+  border: 1px solid rgba(33, 37, 41, 0.55);
+}
+
+.octahedron-key-plane {
+  border: 1px solid rgba(3, 80, 150, 0.55);
+  background-color: rgba(3, 80, 150, 0.1);
+}
+
+.octahedron-key-point {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background-color: #dc3545;
+}
+
+.octahedron-grid-frame {
+  min-width: 0;
+}
+
+.octahedron-slice-scroller {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.octahedron-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--octahedron-count), 4.25rem);
+  grid-auto-rows: 1.85rem;
+  justify-content: center;
+  width: max-content;
+  min-width: 100%;
+  margin: 0 auto;
+}
+
+.octahedron-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.octahedron-row {
+  display: contents;
+}
+
+.octahedron-zero {
+  color: #888;
+}
+
+.octahedron-outside {
+  visibility: hidden;
+}
+
+.octahedron-hint {
+  margin: 0.75rem 0 0;
+}
+
+@media (max-width: 767.98px) {
+  .octahedron-reader {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .octahedron-orientation {
+    max-width: 22rem;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+  }
+
+  .octahedron-grid {
+    grid-template-columns: repeat(var(--octahedron-count), 3.5rem);
+  }
+
+}
+
 // Highlight the targeted bibliography entry when a citation link is clicked
 // and the page jumps to the reference.  The yellow block stays permanently
 // (no fade) and applies to the whole line, with a bit of padding for

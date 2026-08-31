@@ -205,12 +205,47 @@ $('a[data-toggle="tab"]').on("click", function() {
 });
 </script>
 
+<script src="/octahedron-ui.js"></script>
+<script type="text/javascript">
+(() => {
+  const widgets = Array.from(document.querySelectorAll(".octahedron-widget[data-octahedron-key]"));
+
+  function renderKey(key) {
+    const widget = widgets.find((candidate) => candidate.dataset.octahedronKey === key);
+    if (widget) PerverseHodgeOctahedron.renderWidget(widget, key);
+  }
+
+  function renderVisible() {
+    $(".octahedron-widget[data-octahedron-key]:visible").each(function() {
+      PerverseHodgeOctahedron.renderWidget(this, this.dataset.octahedronKey);
+    });
+  }
+
+  const path = location.pathname.replace(/\/$/, "") || "/";
+  renderKey(path === "/" || path === "/K3" ? "K3" : path.substring(1));
+
+  $(document).ready(() => {
+    renderVisible();
+    $('a[data-toggle="tab"]').on("shown.bs.tab", () => requestAnimationFrame(renderVisible));
+    $("#K3-n-selector, #Kum-n-selector").on("change", () => requestAnimationFrame(renderVisible));
+  });
+})();
+</script>
+
 <script src="/llv-data.js"></script>
 <script src="/llv-ui.js"></script>
 <script type="text/javascript">
 $(document).ready(() => {
-  $(".llv-widget[data-llv-key]").each(function() {
-    LLV.renderWidget(this, $(this).data("llv-key"));
-  });
+  function renderVisibleLLV() {
+    $(".llv-widget[data-llv-key]:visible").each(function() {
+      if (this.dataset.llvInitialized) return;
+      this.dataset.llvInitialized = "1";
+      LLV.renderWidget(this, this.dataset.llvKey);
+    });
+  }
+
+  renderVisibleLLV();
+  $('a[data-toggle="tab"]').on("shown.bs.tab", () => requestAnimationFrame(renderVisibleLLV));
+  $("#K3-n-selector, #Kum-n-selector").on("change", () => requestAnimationFrame(renderVisibleLLV));
 });
 </script>
