@@ -71,6 +71,17 @@ To keep `static/llv-data.js` human-readable (all integer lists on single lines):
 node scripts/format-llv-data.mjs
 ```
 
+## Perverse-Hodge octahedron tooling
+
+The perverse-Hodge widget reads the generated files in
+`static/octahedron-data/`. It projects each LLV representation to the first
+three orthonormal weight coordinates and verifies that the result collapses to
+the stored Hodge diamond:
+
+```shell
+sage scripts/build-octahedron-data.sage
+```
+
 ## Bibliography accents
 
 To normalise LaTeX accent commands in `bibliography.bib` to Unicode:

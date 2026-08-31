@@ -2,6 +2,7 @@
 *.swp
 .DS_Store
 __pycache__/
+*.sage.py
 
 # legacy / local (safe to delete)
 .venv/
